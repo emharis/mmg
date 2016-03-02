@@ -81,12 +81,16 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
     });
     
     Route::get('home',function (){
+//        echo App\Helpers\Helper::appsetting('homepage_slider_img_path');
         return view('backend.home');
     });
     
     //Pages >> Homepage
     Route::get('pages/homepage',['as'=>'admin.pages.homepage','uses'=>'Pages\HomepageController@index']);
     Route::post('pages/homepage/new-slider',['as'=>'admin.pages.homepage.new-slider','uses'=>'Pages\HomepageController@newSlider']);
+    Route::get('pages/homepage/slider-shift-up/{id}',['as'=>'admin.pages.homepage.slider-shift-up','uses'=>'Pages\HomepageController@sliderShiftUp']);
+    Route::get('pages/homepage/slider-shift-down/{id}',['as'=>'admin.pages.homepage.slider-shift-down','uses'=>'Pages\HomepageController@sliderShiftDown']);
+    Route::get('pages/homepage/delete-slider/{id}',['as'=>'admin.pages.homepage.delete-slider','uses'=>'Pages\HomepageController@deleteSlider']);
     
     //Pages >> About
     Route::get('pages/about',['as'=>'admin.pages.about','uses'=>'Pages\AboutController@index']);

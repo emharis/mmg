@@ -1,5 +1,11 @@
 @extends('backend.layouts.master')
 
+@section('styles')
+<!-- Bootstrap Color Picker -->
+<link rel="stylesheet" href="backend/plugins/colorpicker/bootstrap-colorpicker.min.css">
+<link href="css/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
+@stop
+
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -73,8 +79,58 @@
 @stop
 
 @section('scripts')
+<!-- bootstrap color picker -->
+<script src="backend/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+<script src="backend/plugins/jqueryform/jquery.form.js" type="text/javascript"></script>
+<script src="js/jquery.fancybox.pack.js" type="text/javascript"></script>
 <script>
     (function ($) {
+//        alert('ok');
+
+        //fancy image
+        $("a.single_image").fancybox();
+
+//        initialize jquery form
+        $('#form-new-slider').ajaxForm({
+            success: function (data) {
+                //bersihkan form
+                $('#form-new-slider input[type=text]').each(function () {
+                    $(this).val('');
+                });
+                $('#form-new-slider select').val([]);
+                //clear img search
+                $('#slider_type_preview').attr('src', '');
+                //close form input
+                $('#form-new').slideUp(250);
+                //tampilkan new form ke tabel
+                var newrow = '<tr>\n\
+                                <td></td>\n\
+                                <td>' + data.img + '</td>\n\
+                                <td></td>\n\
+                                <td></td>\n\
+                                <td></td>\n\
+                              </tr>';
+                $('#table-slider tbody').append();
+            }
+        });
+
+        //check image size 
+        $('input[name=img]').change(function () {
+            var fr = new FileReader;
+            fr.onload = function () {
+                var img = new Image;
+                img.onload = function () {
+                    if (img.width < 1600 || img.height < 565) {
+                        alert('Ukuran gambar tidak sesuai');
+                        $('input[name=img]').val(null);
+                        img = null;
+                    }
+                };
+                img.src = fr.result;
+            };
+            fr.readAsDataURL(this.files[0]);
+        });
+
         //button new click
         $('#btn-new').click(function () {
             //tampilkan form new
@@ -91,24 +147,76 @@
             $('input[name=img]').val('');
         });
 
-        //pilih image slider type
-        $('#slider_type').change(function () {
-            $('#slider_type_preview').fadeOut(200, null, function () {
-                var img_url = $('select[name=slider_type] option:selected').data('img');
-                $('#slider_type_preview').attr('src', img_url);
-                $('#slider_type_preview').fadeIn(250);
-            });
-        });
-
-        //submit form
-        $('form[name=form-new-slider]').submit(function () {
-            var data = $(this).serialize();
-            var url = $(this).attr('action');
-            $.post(url, data, function (dt) {
+        //shift up order
+        $('.btn-shift-up').click(function () {
+            var url = $(this).attr('href');
+            var row = $(this).closest('tr');
+            var rowNum = row.children('td:first-child').html();
+            $.get(url, null, function () {
+                //shifting row
+                row.insertBefore(row.prev());
+                //reset row number 
+                row.children('td:first-child').html(parseInt(rowNum) - 1);
+                row.next().children('td:first-child').html(rowNum);
             });
             return false;
         });
 
+        //shift down order
+        $('.btn-shift-down').click(function () {
+            var url = $(this).attr('href');
+            var row = $(this).closest('tr');
+            var rowNum = row.children('td:first-child').html();
+            $.get(url, null, function () {
+                //shifting row
+                row.insertAfter(row.next());
+                //reset row number 
+                row.children('td:first-child').html(parseInt(rowNum) + 1);
+                row.prev().children('td:first-child').html(rowNum);
+            });
+            return false;
+        });
+
+        //delete slider
+        $('.btn-delete-slider').click(function () {
+            var url = $(this).attr('href');
+            var row = $(this).closest('tr');
+            if (confirm('Anda akan menghapus data ini?')) {
+                $.get(url, null, function () {
+                    //delete row
+                    var nextrow = row;
+                    while(nextrow.next().is('tr')){
+                        var rownum = nextrow.children('td:first-child').html();
+                        nextrow.children('td:first-child').html(parseInt(rownum - 1));
+                        nextrow = nextrow.next();
+                    }
+                });
+                row.hide();
+            }
+            
+            return false;
+        });
+
+        //pilih image slider type
+        $('#slider_type').change(function () {
+            showFormSlider();
+        });
+        function showFormSlider() {
+            var img_url = $('#slider_type option:selected').data('img');
+            var val = $('#slider_type').val();
+            //ganti gambar preview
+            $('#slider_type_preview').fadeOut(200, null, function () {
+                $('#slider_type_preview').attr('src', img_url);
+                $('#slider_type_preview').fadeIn(250);
+            });
+            //ganti form
+            $('.slider-type-1,.slider-type-2,.slider-type-3').hide();
+            $('.slider-type-' + val).fadeIn(250);
+        }
+        showFormSlider();
+
+        //color picker with addon
+        $(".my-colorpicker2").colorpicker();
 
     })(jQuery);
 </script>
