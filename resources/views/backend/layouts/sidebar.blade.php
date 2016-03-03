@@ -34,6 +34,7 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
+                    <li><a href="admin/pages/headerfooter"><i class="fa fa-circle-o"></i> Header & Footer</a></li>
                     <li><a href="admin/pages/homepage"><i class="fa fa-circle-o"></i> Home Page</a></li>
                     <li><a href="admin/pages/about"><i class="fa fa-circle-o"></i> About Us</a></li>
                     <li><a href="admin/pages/product"><i class="fa fa-circle-o"></i> Products</a></li>

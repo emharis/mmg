@@ -4,6 +4,12 @@
 <!-- Bootstrap Color Picker -->
 <link rel="stylesheet" href="backend/plugins/colorpicker/bootstrap-colorpicker.min.css">
 <link href="css/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
+<link href="backend/plugins/bootstrap-vertical-tab/bootstrap.vertical-tabs.min.css" rel="stylesheet" type="text/css"/>
+<style>
+    .modal-dialog{
+        width: 80%;
+    }
+</style>
 @stop
 
 @section('content')
@@ -34,25 +40,13 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="tab_1">
-                @include('backend.pages.homepage.imageslider')
+                @include('backend.pages.homepage.imageslider.imageslider')
             </div><!-- /.tab-pane -->
             <div class="tab-pane" id="tab_2">
-                The European languages are members of the same family. Their separate existence is a myth.
-                For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                new common language would be desirable: one could refuse to pay expensive translators. To
-                achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                words. If several languages coalesce, the grammar of the resulting language is more simple
-                and regular than that of the individual languages.
+                @include('backend.pages.homepage.midcontent.midcontent')
             </div><!-- /.tab-pane -->
             <div class="tab-pane" id="tab_3">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                like Aldus PageMaker including versions of Lorem Ipsum.
+                @include('backend.pages.homepage.layanan.layanan')
             </div><!-- /.tab-pane -->
             <div class="tab-pane" id="tab_4">
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -85,12 +79,12 @@
 <script src="js/jquery.fancybox.pack.js" type="text/javascript"></script>
 <script>
     (function ($) {
-//        alert('ok');
 
         //fancy image
         $("a.single_image").fancybox();
 
 //        initialize jquery form
+        //submit new slider
         $('#form-new-slider').ajaxForm({
             success: function (data) {
                 //bersihkan form
@@ -98,24 +92,44 @@
                     $(this).val('');
                 });
                 $('#form-new-slider select').val([]);
+                $('#form-new-slider input[type=file]').val('');
                 //clear img search
                 $('#slider_type_preview').attr('src', '');
                 //close form input
                 $('#form-new').slideUp(250);
                 //tampilkan new form ke tabel
-                var newrow = '<tr>\n\
-                                <td></td>\n\
-                                <td>' + data.img + '</td>\n\
-                                <td></td>\n\
-                                <td></td>\n\
-                                <td></td>\n\
-                              </tr>';
-                $('#table-slider tbody').append();
+                var cekbox = '<input type="checkbox" name="ck_aktif_"' + data.id + ' class="ck_img_slider"  >';
+                if(data.aktif == 'Y'){
+                    cekbox = '<input type="checkbox" name="ck_aktif_"' + data.id + ' class="ck_img_slider"  checked="checked" >';
+                }
+                
+                //reload saja
+                location.reload();
+                
+//                var newrow = '<tr>\n\
+//            <td></td>\n\
+//            <td>' + data.img + '</td>\n\
+//            <td>\n\
+//                <a class="single_image" href="' + data.imgpath +'/'+data.img + '">View</a>\n\
+//            </td>\n\
+//            <td >' + cekbox + '\n\
+//            </td>\n\
+//            <td>\n\
+//                <a title="Shift Up" class="btn-shift-up btn btn-success btn-sm" href="admin/pages/homepage/slider-shift-up/' + data.id + '" ><i class="fa fa-angle-double-up" ></i></a>\n\
+//                <a title="Shift Down" class="btn-shift-down btn btn-warning btn-sm" href="admin/pages/homepage/slider-shift-down/' + data.id + '" ><i class="fa fa-angle-double-down" ></i></a>\n\
+//            </td>\n\
+//            <td>\n\
+//                <a  title="Edit" class="btn-edit-slider btn btn-primary btn-sm" href="admin/pages/homepage/edit-slider/' + data.id + '" ><i class="fa fa-edit"></i></a>\n\
+//                <a title="Delete" class="btn-delete-slider btn btn-danger btn-sm" href="admin/pages/homepage/delete-slider/' + data.id + '" ><i class="fa fa-trash-o"></i></a>\n\
+//            </td>\n\
+//        </tr>';
+//
+//                $('#table-slider tbody').append(newrow);
             }
         });
 
         //check image size 
-        $('input[name=img]').change(function () {
+        $('#form-new input[name=img]').change(function () {
             var fr = new FileReader;
             fr.onload = function () {
                 var img = new Image;
@@ -184,16 +198,42 @@
             if (confirm('Anda akan menghapus data ini?')) {
                 $.get(url, null, function () {
                     //delete row
-                    var nextrow = row;
-                    while(nextrow.next().is('tr')){
-                        var rownum = nextrow.children('td:first-child').html();
-                        nextrow.children('td:first-child').html(parseInt(rownum - 1));
-                        nextrow = nextrow.next();
-                    }
+//                    var nextrow = row;
+//                    while (nextrow.next().is('tr')) {
+//                        var rownum = nextrow.children('td:first-child').html();
+//                        nextrow.children('td:first-child').html(parseInt(rownum - 1));
+//                        nextrow = nextrow.next();
+//                    }
+                    row.fadeOut(250, null, function () {
+                        //reorder row number
+                        $(this).addClass('hide');
+                        $rownum = 1;
+                        $('#table-slider tbody tr').each(function () {
+                            if (!$(this).hasClass('hide')) {
+                                $(this).children('td:first-child').html($rownum++);
+                            }
+                        });
+                        //delete row yang punya class hide
+                        $('#table-slider tr.hide').remove();
+                    });
                 });
-                row.hide();
+
             }
-            
+
+            return false;
+        });
+
+        //edit slider
+        $('.btn-edit-slider').click(function () {
+            var url = $(this).attr('href');
+//            $.get(url, null, function (data) {
+////                $('.modal-body').loa
+////                $('.modal').modal('show');        
+//            });
+            $('.modal-slider .modal-body').load(url, null, function () {
+                $('.modal-slider .modal').modal('show');
+            });
+
             return false;
         });
 
@@ -210,8 +250,8 @@
                 $('#slider_type_preview').fadeIn(250);
             });
             //ganti form
-            $('.slider-type-1,.slider-type-2,.slider-type-3').hide();
-            $('.slider-type-' + val).fadeIn(250);
+            $('#form-new .slider-type-1,.slider-type-2,.slider-type-3').hide();
+            $('#form-new .slider-type-' + val).fadeIn(250);
         }
         showFormSlider();
 

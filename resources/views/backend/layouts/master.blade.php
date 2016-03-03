@@ -48,7 +48,7 @@
 
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
-                    <b>Develop by</b> Datamatic Tech Id
+                    <b>Dikembangkan oleh</b> Datamatic Tech Id
                 </div>
                 <strong>Copyright &copy; 2016 <a href="http://almsaeedstudio.com">Merak Muda Gas</a>.</strong> All rights reserved.
             </footer>

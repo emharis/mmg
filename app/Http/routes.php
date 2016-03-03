@@ -85,12 +85,19 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
         return view('backend.home');
     });
     
-    //Pages >> Homepage
+    //Pages >> Homepage >> Image Slider
     Route::get('pages/homepage',['as'=>'admin.pages.homepage','uses'=>'Pages\HomepageController@index']);
     Route::post('pages/homepage/new-slider',['as'=>'admin.pages.homepage.new-slider','uses'=>'Pages\HomepageController@newSlider']);
     Route::get('pages/homepage/slider-shift-up/{id}',['as'=>'admin.pages.homepage.slider-shift-up','uses'=>'Pages\HomepageController@sliderShiftUp']);
     Route::get('pages/homepage/slider-shift-down/{id}',['as'=>'admin.pages.homepage.slider-shift-down','uses'=>'Pages\HomepageController@sliderShiftDown']);
     Route::get('pages/homepage/delete-slider/{id}',['as'=>'admin.pages.homepage.delete-slider','uses'=>'Pages\HomepageController@deleteSlider']);
+    Route::get('pages/homepage/edit-slider/{id}',['as'=>'admin.pages.homepage.edit-slider','uses'=>'Pages\HomepageController@editSlider']);
+    Route::post('pages/homepage/update-slider',['as'=>'admin.pages.homepage.update-slider','uses'=>'Pages\HomepageController@updateSlider']);
+    //Pages >> Homepage >> Midcontent
+    Route::post('pages/homepage/update-midcontent',['as'=>'admin.pages.homepage.update-midcontent','uses'=>'Pages\HomepageController@updateMidcontent']);
+    Route::get('pages/homepage/delete-midcontent-img/{position}',['as'=>'admin.pages.homepage.delete-midcontent-img','uses'=>'Pages\HomepageController@deleteMidcontentImg']);
+    //pages >> Homepage >> Layanan
+    Route::post('pages/homepage/new-layanan',['as'=>'admin.pages.homepage.new-layanan','uses'=>'Pages\HomepageController@newLayanan']);
     
     //Pages >> About
     Route::get('pages/about',['as'=>'admin.pages.about','uses'=>'Pages\AboutController@index']);
