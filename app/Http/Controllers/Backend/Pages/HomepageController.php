@@ -351,6 +351,8 @@ class HomepageController extends Controller {
 
         if (!$request->ajax()) {
             return redirect('admin/pages/homepage');
+        }else{
+            return json_encode(\DB::table('homepage_layanan')->find($id));
         };
     }
 
