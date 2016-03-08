@@ -207,10 +207,10 @@
                     row.fadeOut(250, null, function () {
                         //reorder row number
                         $(this).addClass('hide');
-                        $rownum = 1;
+                        var re_rownum = 1;
                         $('#table-slider tbody tr').each(function () {
                             if (!$(this).hasClass('hide')) {
-                                $(this).children('td:first-child').html($rownum++);
+                                $(this).children('td:first-child').html(re_rownum++);
                             }
                         });
                         //delete row yang punya class hide
@@ -230,8 +230,8 @@
 ////                $('.modal-body').loa
 ////                $('.modal').modal('show');        
 //            });
-            $('.modal-slider .modal-body').load(url, null, function () {
-                $('.modal-slider .modal').modal('show');
+            $('#modal-slider .modal-body').load(url, null, function () {
+                $('#modal-slider').modal('show');
             });
 
             return false;

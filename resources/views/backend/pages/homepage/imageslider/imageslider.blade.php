@@ -43,7 +43,7 @@
     </tbody>
 </table>
 
-<div class="modal modal-slider" data-keyboard="false" data-backdrop="static">
+<div class="modal " id="modal-slider" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

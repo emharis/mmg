@@ -27,13 +27,15 @@ class HomepageController extends Controller {
         $layanan = \DB::table('homepage_layanan')
                 ->orderBy('order', 'asc')
                 ->get();
+        $layanan_section_title = \App\Helpers\Helper::appsetting('homepage_layanan_title');
 
         return view('backend.pages.homepage.index', [
             'imgsliders' => $imgsliders,
             'leftmidcontent' => $leftmidcontent,
             'midmidcontent' => $midmidcontent,
             'rightmidcontent' => $rightmidcontent,
-            'layanan' => $layanan
+            'layanan' => $layanan,
+            'layanan_section_title' => $layanan_section_title
         ]);
     }
 
@@ -294,7 +296,7 @@ class HomepageController extends Controller {
      * Layanan Section
      */
     public function newLayanan(Request $request) {
-        echo 'simpan data layanan baru';
+        //echo 'simpan data layanan baru';
 
         $type = $request->input('layanan_type');
         //get order terakhir
@@ -309,50 +311,224 @@ class HomepageController extends Controller {
         ]);
 
 //        cek apakah punya gambar
-        if ($request->hasFile('img-bottom-type-1')) {
-            $file = $request->file('img-bottom-type-1');
-            $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
-            if ($file->isValid()) {
-                $file->move(\App\Helpers\Helper::appsetting('homepage_layanan_img_path'), $filename);
+        if ($type == 1) {
+            if ($request->hasFile('img-bottom-type-1')) {
+                $file = $request->file('img-bottom-type-1');
+                $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
+                if ($file->isValid()) {
+                    $file->move(\App\Helpers\Helper::appsetting('homepage_layanan_img_path'), $filename);
+                }
+                //update ke database
+                \DB::table('homepage_layanan')
+                        ->whereId($id)
+                        ->update([
+                            'img_bottom' => $filename
+                ]);
             }
-            //update ke database
-            \DB::table('homepage_layanan')
-                    ->whereId($id)
-                    ->update([
-                        'img_1' => $filename
-            ]);
-        }
-        if ($request->hasFile('img-side-type-1')) {
-            $file = $request->file('img-side-type-1');
-            $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
-            if ($file->isValid()) {
-                $file->move(\App\Helpers\Helper::appsetting('homepage_layanan_img_path'), $filename);
+            if ($request->hasFile('img-side-type-1')) {
+                $file = $request->file('img-side-type-1');
+                $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
+                if ($file->isValid()) {
+                    $file->move(\App\Helpers\Helper::appsetting('homepage_layanan_img_path'), $filename);
+                }
+                //update ke database
+                \DB::table('homepage_layanan')
+                        ->whereId($id)
+                        ->update([
+                            'img_side' => $filename
+                ]);
             }
-            //update ke database
-            \DB::table('homepage_layanan')
-                    ->whereId($id)
-                    ->update([
-                        'img_2' => $filename
-            ]);
-        }
-        if ($request->hasFile('img-type-2')) {
-            $file = $request->file('img-type-2');
-            $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
-            if ($file->isValid()) {
-                $file->move(\App\Helpers\Helper::appsetting('homepage_layanan_img_path'), $filename);
+        } else {
+            if ($request->hasFile('img-bottom-type-2')) {
+                $file = $request->file('img-bottom-type-2');
+                $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
+                if ($file->isValid()) {
+                    $file->move(\App\Helpers\Helper::appsetting('homepage_layanan_img_path'), $filename);
+                }
+                //update ke database
+                \DB::table('homepage_layanan')
+                        ->whereId($id)
+                        ->update([
+                            'img_bottom' => $filename
+                ]);
             }
-            //update ke database
-            \DB::table('homepage_layanan')
-                    ->whereId($id)
-                    ->update([
-                        'img_1' => $filename
-            ]);
         }
 
         if (!$request->ajax()) {
             return redirect('admin/pages/homepage');
-        }else{
+        } else {
             return json_encode(\DB::table('homepage_layanan')->find($id));
+        };
+    }
+
+    //shift up order layanan
+    public function layananShiftUp($id, Request $request) {
+        $layanan = \DB::table('homepage_layanan')->find($id);
+        if ($layanan->order > 1) {
+            $upper = \DB::table('homepage_layanan')
+                    ->whereOrder($layanan->order - 1)
+                    ->first();
+
+            //rubah posisi layanan
+            \DB::table('homepage_layanan')
+                    ->whereId($upper->id)
+                    ->update(['order' => $layanan->order]);
+
+            \DB::table('homepage_layanan')
+                    ->whereId($layanan->id)
+                    ->update(['order' => $layanan->order - 1]);
+        }
+
+        if (!$request->ajax()) {
+            return redirect('admin/pages/homepage');
+        };
+    }
+
+    //shoft down order layanan
+    public function layananShiftDown($id, Request $request) {
+        $layanan = \DB::table('homepage_layanan')->find($id);
+        $maxorder = \DB::table('homepage_layanan')->max('order');
+        if ($layanan->order < $maxorder) {
+            $lower = \DB::table('homepage_layanan')
+                    ->whereOrder($layanan->order + 1)
+                    ->first();
+
+            //rubah posisi layanan
+            \DB::table('homepage_layanan')
+                    ->whereId($lower->id)
+                    ->update(['order' => $layanan->order]);
+
+            \DB::table('homepage_layanan')
+                    ->whereId($layanan->id)
+                    ->update(['order' => $layanan->order + 1]);
+        }
+
+        if (!$request->ajax()) {
+            return redirect('admin/pages/homepage');
+        };
+    }
+
+    //delete data layanan
+    public function deleteLayanan($id, Request $request) {
+        //delete file
+        $layanan = \DB::table('homepage_layanan')
+                ->find($id);
+
+        \File::delete(\App\Helpers\Helper::appsetting('homepage_layanan_img_path') . '/' . $layanan->img_side);
+        \File::delete(\App\Helpers\Helper::appsetting('homepage_layanan_img_path') . '/' . $layanan->img_bottom);
+
+        //rubah order data yang lain
+        $layanans = \DB::table('homepage_layanan')
+                ->where('order', '>', $layanan->order)
+                ->get();
+        foreach ($layanans as $dt) {
+            \DB::table('homepage_layanan')
+                    ->whereId($dt->id)
+                    ->update([
+                        'order' => $dt->order - 1
+            ]);
+        }
+
+        //delete from database
+        \DB::table('homepage_layanan')
+                ->whereId($id)
+                ->delete();
+
+        if (!$request->ajax()) {
+            return redirect('admin/pages/homepage');
+        };
+    }
+
+    //edit layanan
+    public function editLayanan($id) {
+        $layanan = \DB::table('homepage_layanan')
+                ->find($id);
+        $layanan->imgpath = \App\Helpers\Helper::appsetting('homepage_layanan_img_path');
+        return view('backend.pages.homepage.layanan.editlayanan', [
+            'data' => $layanan
+        ]);
+    }
+
+    //simpan perubahan data layanan
+    public function updateLayanan(Request $request) {
+        $layanan = \DB::table('homepage_layanan')
+                ->find($request->input('layanan_id'));
+
+        \DB::table('homepage_layanan')
+                ->whereId($request->input('layanan_id'))
+                ->update([
+                    'title' => $request->input('title'),
+                    'content' => $request->input('content'),
+        ]);
+
+        //cek apakah ada gambar yang di upload
+        if ($layanan->type == 1) {
+            //side image
+            if ($request->hasFile('img-side-type-1')) {
+                $file = $request->file('img-side-type-1');
+                $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
+                if ($file->isValid()) {
+                    //delete file yang lama dulu
+                    \File::delete(\App\Helpers\Helper::appsetting('homepage_layanan_img_path') . '/' . $layanan->img_side);
+                    //simpan file yang baru
+                    $file->move(\App\Helpers\Helper::appsetting('homepage_layanan_img_path'), $filename);
+                }
+                //update ke database
+                \DB::table('homepage_layanan')
+                        ->whereId($layanan->id)
+                        ->update([
+                            'img_side' => $filename
+                ]);
+            }
+
+            //bottom image
+            if ($request->hasFile('img-bottom-type-1')) {
+                $file = $request->file('img-bottom-type-1');
+                $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
+                if ($file->isValid()) {
+                    //delete file yang lama dulu
+                    \File::delete(\App\Helpers\Helper::appsetting('homepage_layanan_img_path') . '/' . $layanan->img_bottom);
+                    //simpan file yang baru
+                    $file->move(\App\Helpers\Helper::appsetting('homepage_layanan_img_path'), $filename);
+                }
+                //update ke database
+                \DB::table('homepage_layanan')
+                        ->whereId($layanan->id)
+                        ->update([
+                            'img_bottom' => $filename
+                ]);
+            }
+        }elseif ($layanan->type == 2) {
+
+            //bottom image
+            if ($request->hasFile('img-bottom-type-2')) {
+                $file = $request->file('img-bottom-type-2');
+                $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
+                if ($file->isValid()) {
+                    //delete file yang lama dulu
+                    \File::delete(\App\Helpers\Helper::appsetting('homepage_layanan_img_path') . '/' . $layanan->img_bottom);
+                    //simpan file yang baru
+                    $file->move(\App\Helpers\Helper::appsetting('homepage_layanan_img_path'), $filename);
+                }
+                //update ke database
+                \DB::table('homepage_layanan')
+                        ->whereId($layanan->id)
+                        ->update([
+                            'img_bottom' => $filename
+                ]);
+            }
+        }
+
+        if (!$request->ajax()) {
+            return redirect('admin/pages/homepage');
+        };
+    }
+
+    //update sectio layanan title
+    public function updateSectionLayanan(Request $request) {
+        \App\Helpers\Helper::updateappsetting('homepage_layanan_title', $request->input('layanan_section_title'));
+        if (!$request->ajax()) {
+            return redirect('admin/pages/homepage');
         };
     }
 

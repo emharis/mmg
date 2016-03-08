@@ -98,6 +98,12 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
     Route::get('pages/homepage/delete-midcontent-img/{position}',['as'=>'admin.pages.homepage.delete-midcontent-img','uses'=>'Pages\HomepageController@deleteMidcontentImg']);
     //pages >> Homepage >> Layanan
     Route::post('pages/homepage/new-layanan',['as'=>'admin.pages.homepage.new-layanan','uses'=>'Pages\HomepageController@newLayanan']);
+    Route::get('pages/homepage/layanan-shift-up/{id}',['as'=>'admin.pages.homepage.layanan-shift-up','uses'=>'Pages\HomepageController@layananShiftUp']);
+    Route::get('pages/homepage/layanan-shift-down/{id}',['as'=>'admin.pages.homepage.layanan-shift-down','uses'=>'Pages\HomepageController@layananShiftDown']);
+    Route::get('pages/homepage/delete-layanan/{id}',['as'=>'admin.pages.homepage.delete-layanan','uses'=>'Pages\HomepageController@deleteLayanan']);
+    Route::get('pages/homepage/edit-layanan/{id}',['as'=>'admin.pages.homepage.edit-layanan','uses'=>'Pages\HomepageController@editLayanan']);
+    Route::post('pages/homepage/update-section-layanan',['as'=>'admin.pages.homepage.update-section-layanan','uses'=>'Pages\HomepageController@updateSectionLayanan']);
+    Route::post('pages/homepage/update-layanan',['as'=>'admin.pages.homepage.update-layanan','uses'=>'Pages\HomepageController@updateLayanan']);
     
     //Pages >> About
     Route::get('pages/about',['as'=>'admin.pages.about','uses'=>'Pages\AboutController@index']);
