@@ -1,9 +1,3 @@
-@section('styles')
-@parent
-<!-- iCheck for checkboxes and radio inputs -->
-<link rel="stylesheet" href="backend/plugins/iCheck/all.css">
-@append
-
 <section id="layout">
     <h2 class="page-header"><a href="admin/pages/headfoot#sosmed">Social Media</a></h2>
     <table class="table table-bordered table-condensed" >
@@ -40,9 +34,8 @@
     </table>
 </section>
 
-
 <section id="layout">
-    <h2 class="page-header"><a href="admin/pages/headfoot#layout">Contact Info</a></h2>
+    <h2 class="page-header"><a href="admin/pages/headfoot#contact">Contact Info</a></h2>
     <table class="table table-bordered table-condensed" >
         <thead>
             <tr>
@@ -78,15 +71,9 @@
 
 @section('scripts')
 @parent
-<!-- iCheck 1.0.1 -->
-<script src="backend/plugins/iCheck/icheck.min.js"></script>
+
 <script>
 (function ($) {
-    //styling checkbox
-    $('input[type="checkbox"].ck-sosmed, input[type="checkbox"].ck-contact').iCheck({
-        checkboxClass: 'icheckbox_flat-green'
-    });
-
     //set on atau off aktif
     $('.ck-sosmed').on('ifChecked', function () {
         var id = $(this).val();
@@ -131,6 +118,7 @@
         });
         return false;
     });
+    
     //shift down order
     $('.btn-shift-down').click(function () {
         var url = $(this).attr('href');

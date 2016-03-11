@@ -72,64 +72,78 @@ Route::group(['middleware' => ['web']], function () {
 
 //Backend
 Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
-    Route::get('/',function(){
-       return redirect('admin/login'); 
+    Route::get('/', function() {
+        return redirect('admin/login');
     });
-    
-    Route::get('login',function (){
+
+    Route::get('login', function () {
         return view('backend.login');
     });
-    
-    Route::get('home',function (){
+
+    Route::get('home', function () {
 //        echo App\Helpers\Helper::appsetting('homepage_slider_img_path');
         return view('backend.home');
     });
-    
-    //Pages >> Homepage >> Image Slider
-    Route::get('pages/homepage',['as'=>'admin.pages.homepage','uses'=>'Pages\HomepageController@index']);
-    Route::post('pages/homepage/new-slider',['as'=>'admin.pages.homepage.new-slider','uses'=>'Pages\HomepageController@newSlider']);
-    Route::get('pages/homepage/slider-shift-up/{id}',['as'=>'admin.pages.homepage.slider-shift-up','uses'=>'Pages\HomepageController@sliderShiftUp']);
-    Route::get('pages/homepage/slider-shift-down/{id}',['as'=>'admin.pages.homepage.slider-shift-down','uses'=>'Pages\HomepageController@sliderShiftDown']);
-    Route::get('pages/homepage/delete-slider/{id}',['as'=>'admin.pages.homepage.delete-slider','uses'=>'Pages\HomepageController@deleteSlider']);
-    Route::get('pages/homepage/edit-slider/{id}',['as'=>'admin.pages.homepage.edit-slider','uses'=>'Pages\HomepageController@editSlider']);
-    Route::post('pages/homepage/update-slider',['as'=>'admin.pages.homepage.update-slider','uses'=>'Pages\HomepageController@updateSlider']);
-    //Pages >> Homepage >> Midcontent
-    Route::post('pages/homepage/update-midcontent',['as'=>'admin.pages.homepage.update-midcontent','uses'=>'Pages\HomepageController@updateMidcontent']);
-    Route::get('pages/homepage/delete-midcontent-img/{position}',['as'=>'admin.pages.homepage.delete-midcontent-img','uses'=>'Pages\HomepageController@deleteMidcontentImg']);
-    //pages >> Homepage >> Layanan
-    Route::post('pages/homepage/new-layanan',['as'=>'admin.pages.homepage.new-layanan','uses'=>'Pages\HomepageController@newLayanan']);
-    Route::get('pages/homepage/layanan-shift-up/{id}',['as'=>'admin.pages.homepage.layanan-shift-up','uses'=>'Pages\HomepageController@layananShiftUp']);
-    Route::get('pages/homepage/layanan-shift-down/{id}',['as'=>'admin.pages.homepage.layanan-shift-down','uses'=>'Pages\HomepageController@layananShiftDown']);
-    Route::get('pages/homepage/delete-layanan/{id}',['as'=>'admin.pages.homepage.delete-layanan','uses'=>'Pages\HomepageController@deleteLayanan']);
-    Route::get('pages/homepage/edit-layanan/{id}',['as'=>'admin.pages.homepage.edit-layanan','uses'=>'Pages\HomepageController@editLayanan']);
-    Route::post('pages/homepage/update-section-layanan',['as'=>'admin.pages.homepage.update-section-layanan','uses'=>'Pages\HomepageController@updateSectionLayanan']);
-    Route::post('pages/homepage/update-layanan',['as'=>'admin.pages.homepage.update-layanan','uses'=>'Pages\HomepageController@updateLayanan']);
-    //pages >> Homepage >> Gallery
-    Route::post('pages/homepage/update-section-gallery',['as'=>'admin.pages.homepage.update-section-gallery','uses'=>'Pages\HomepageController@updateSectionGallery']);
-    Route::post('pages/homepage/set-image-gallery',['as'=>'admin.pages.homepage.set-image-gallery','uses'=>'Pages\HomepageController@setImageGallery']);
-    //pages >> Homepage >> Blog
-    Route::post('pages/homepage/update-section-title-blog',['as'=>'admin.pages.homepage.update-section-title-blog','uses'=>'Pages\HomepageController@updateSectionTitleBlog']);
-    
-    //Pages >> Header & Footer >> SOSMED
-    Route::get('pages/headfoot',['as'=>'admin.pages.headfoot','uses'=>'Pages\HeadfootController@index']);
-    Route::get('pages/headfoot/set-aktif/{id}/{aktif}',['as'=>'admin.pages.headfoot.set-aktif','uses'=>'Pages\HeadfootController@setAktif']);
-    Route::get('pages/headfoot/shift-up/{id}',['as'=>'admin.pages.headfoot.shift-up','uses'=>'Pages\HeadfootController@shiftUp']);
-    Route::get('pages/headfoot/shift-down/{id}',['as'=>'admin.pages.headfoot.shift-down','uses'=>'Pages\HeadfootController@shiftDown']);
-    Route::get('pages/headfoot/update-sosmed/{id}/{val}',['as'=>'admin.pages.headfoot.update-sosmed','uses'=>'Pages\HeadfootController@updateSosmed']);
-    Route::post('pages/headfoot/update-contact',['as'=>'admin.pages.headfoot.update-contact','uses'=>'Pages\HeadfootController@updateContact']);
-    //Pages >> Header & Footer >> Contact
-    Route::get('pages/headfoot/set-aktif-contact/{id}/{aktif}',['as'=>'admin.pages.headfoot.set-aktif-contact','uses'=>'Pages\HeadfootController@setAktifContact']);
 
+    //Pages >> Homepage >> Image Slider
+    Route::get('pages/homepage', ['as' => 'admin.pages.homepage', 'uses' => 'Pages\HomepageController@index']);
+    Route::post('pages/homepage/new-slider', ['as' => 'admin.pages.homepage.new-slider', 'uses' => 'Pages\HomepageController@newSlider']);
+    Route::get('pages/homepage/slider-shift-up/{id}', ['as' => 'admin.pages.homepage.slider-shift-up', 'uses' => 'Pages\HomepageController@sliderShiftUp']);
+    Route::get('pages/homepage/slider-shift-down/{id}', ['as' => 'admin.pages.homepage.slider-shift-down', 'uses' => 'Pages\HomepageController@sliderShiftDown']);
+    Route::get('pages/homepage/delete-slider/{id}', ['as' => 'admin.pages.homepage.delete-slider', 'uses' => 'Pages\HomepageController@deleteSlider']);
+    Route::get('pages/homepage/edit-slider/{id}', ['as' => 'admin.pages.homepage.edit-slider', 'uses' => 'Pages\HomepageController@editSlider']);
+    Route::post('pages/homepage/update-slider', ['as' => 'admin.pages.homepage.update-slider', 'uses' => 'Pages\HomepageController@updateSlider']);
+    //Pages >> Homepage >> Midcontent
+    Route::post('pages/homepage/update-midcontent', ['as' => 'admin.pages.homepage.update-midcontent', 'uses' => 'Pages\HomepageController@updateMidcontent']);
+    Route::get('pages/homepage/delete-midcontent-img/{position}', ['as' => 'admin.pages.homepage.delete-midcontent-img', 'uses' => 'Pages\HomepageController@deleteMidcontentImg']);
+    //pages >> Homepage >> Layanan
+    Route::post('pages/homepage/new-layanan', ['as' => 'admin.pages.homepage.new-layanan', 'uses' => 'Pages\HomepageController@newLayanan']);
+    Route::get('pages/homepage/layanan-shift-up/{id}', ['as' => 'admin.pages.homepage.layanan-shift-up', 'uses' => 'Pages\HomepageController@layananShiftUp']);
+    Route::get('pages/homepage/layanan-shift-down/{id}', ['as' => 'admin.pages.homepage.layanan-shift-down', 'uses' => 'Pages\HomepageController@layananShiftDown']);
+    Route::get('pages/homepage/delete-layanan/{id}', ['as' => 'admin.pages.homepage.delete-layanan', 'uses' => 'Pages\HomepageController@deleteLayanan']);
+    Route::get('pages/homepage/edit-layanan/{id}', ['as' => 'admin.pages.homepage.edit-layanan', 'uses' => 'Pages\HomepageController@editLayanan']);
+    Route::post('pages/homepage/update-section-layanan', ['as' => 'admin.pages.homepage.update-section-layanan', 'uses' => 'Pages\HomepageController@updateSectionLayanan']);
+    Route::post('pages/homepage/update-layanan', ['as' => 'admin.pages.homepage.update-layanan', 'uses' => 'Pages\HomepageController@updateLayanan']);
+    //pages >> Homepage >> Gallery
+    Route::post('pages/homepage/update-section-gallery', ['as' => 'admin.pages.homepage.update-section-gallery', 'uses' => 'Pages\HomepageController@updateSectionGallery']);
+    Route::post('pages/homepage/set-image-gallery', ['as' => 'admin.pages.homepage.set-image-gallery', 'uses' => 'Pages\HomepageController@setImageGallery']);
+    //pages >> Homepage >> Blog
+    Route::post('pages/homepage/update-section-title-blog', ['as' => 'admin.pages.homepage.update-section-title-blog', 'uses' => 'Pages\HomepageController@updateSectionTitleBlog']);
+
+    //Pages >> Header & Footer >> SOSMED
+    Route::get('pages/headfoot', ['as' => 'admin.pages.headfoot', 'uses' => 'Pages\HeadfootController@index']);
+    Route::get('pages/headfoot/set-aktif/{id}/{aktif}', ['as' => 'admin.pages.headfoot.set-aktif', 'uses' => 'Pages\HeadfootController@setAktif']);
+    Route::get('pages/headfoot/shift-up/{id}', ['as' => 'admin.pages.headfoot.shift-up', 'uses' => 'Pages\HeadfootController@shiftUp']);
+    Route::get('pages/headfoot/shift-down/{id}', ['as' => 'admin.pages.headfoot.shift-down', 'uses' => 'Pages\HeadfootController@shiftDown']);
+    Route::get('pages/headfoot/update-sosmed/{id}/{val}', ['as' => 'admin.pages.headfoot.update-sosmed', 'uses' => 'Pages\HeadfootController@updateSosmed']);
+    Route::post('pages/headfoot/update-contact', ['as' => 'admin.pages.headfoot.update-contact', 'uses' => 'Pages\HeadfootController@updateContact']);
+    //Pages >> Header & Footer >> Contact
+    Route::get('pages/headfoot/set-aktif-contact/{id}/{aktif}', ['as' => 'admin.pages.headfoot.set-aktif-contact', 'uses' => 'Pages\HeadfootController@setAktifContact']);
+    Route::post('pages/headfoot/update-menu-title', ['as' => 'admin.pages.headfoot.update-menu-title', 'uses' => 'Pages\HeadfootController@updateMenuTitle']);
+    Route::post('pages/headfoot/update-menu-position', ['as' => 'admin.pages.headfoot.update-menu-position', 'uses' => 'Pages\HeadfootController@updateMenuPosition']);
+    Route::get('pages/headfoot/shift-up-menu/{id}', ['as' => 'admin.pages.headfoot.shift-up-menu', 'uses' => 'Pages\HeadfootController@shiftUpMenu']);
+    Route::get('pages/headfoot/shift-down-menu/{id}', ['as' => 'admin.pages.headfoot.shift-down-menu', 'uses' => 'Pages\HeadfootController@shiftDownMenu']);
+    Route::get('pages/headfoot/update-aktif-menu/{id}/{aktif}', ['as' => 'admin.pages.headfoot.update-aktif-menu', 'uses' => 'Pages\HeadfootController@updateAktifMenu']);
+    //Pages >> Header & Footer >> Emergency
+    Route::post('pages/headfoot/update-emergency', ['as' => 'admin.pages.headfoot.update-emergency', 'uses' => 'Pages\HeadfootController@updateEmergency']);
+    //Pages >> Header & Footer >> partner
+    Route::post('pages/headfoot/new-partner', ['as' => 'admin.pages.headfoot.new-partner', 'uses' => 'Pages\HeadfootController@newPartner']);
+    Route::get('pages/headfoot/shift-up-partner/{id}', ['as' => 'admin.pages.headfoot.shift-up-partner', 'uses' => 'Pages\HeadfootController@shiftUpPartner']);
+    Route::get('pages/headfoot/shift-down-partner/{id}', ['as' => 'admin.pages.headfoot.shift-down-partner', 'uses' => 'Pages\HeadfootController@shiftDownPartner']);
+    Route::get('pages/headfoot/delete-partner/{id}', ['as' => 'admin.pages.headfoot.delete-partner', 'uses' => 'Pages\HeadfootController@deletePartner']);
+    Route::get('pages/headfoot/update-aktif-partner/{id}/{aktif}', ['as' => 'admin.pages.headfoot.update-aktif-partner', 'uses' => 'Pages\HeadfootController@updateAktifPartner']);
+    Route::get('pages/headfoot/edit-partner/{id}', ['as' => 'admin.pages.headfoot.edit-partner', 'uses' => 'Pages\HeadfootController@editPartner']);
+    Route::post('pages/headfoot/update-partner', ['as' => 'admin.pages.headfoot.update-partner', 'uses' => 'Pages\HeadfootController@updatePartner']);
     
     //Pages >> About
-    Route::get('pages/about',['as'=>'admin.pages.about','uses'=>'Pages\AboutController@index']);
-    
-    
-    Route::get('test',function(){
-        $img = \DB::table('homepage_gallery')->lists('img','img_no');
+    Route::get('pages/about', ['as' => 'admin.pages.about', 'uses' => 'Pages\AboutController@index']);
+
+
+    Route::get('test', function() {
+        $img = \DB::table('homepage_gallery')->lists('img', 'img_no');
         print_r($img);
     });
-    
+
 //    Route::group(['middleware' => 'auth'], function () {
 //        // Dashboard
 //        Route::get('/', ['as' => 'admin.dashboard', 'uses' => 'DashboardController@index']);
@@ -162,7 +176,6 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
 //        // Profile
 //        Route::get('profile', ['as' => 'admin.auth.profile', 'uses' => 'Auth\ProfileController@index']);
 //    });
-
 //    // Authentication
 //    Route::get('auth/login', ['as' => 'admin.auth.login', 'middleware' => 'guest', 'uses' => 'Auth\AuthController@getLogin']);
 //    Route::post('auth/login', ['as' => 'admin.auth.login', 'middleware' => 'guest', 'uses' => 'Auth\AuthController@postLogin']);
