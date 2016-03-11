@@ -24,10 +24,11 @@ CREATE TABLE IF NOT EXISTS `appsetting` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table merakmuda_db.appsetting: ~7 rows (approximately)
+-- Dumping data for table merakmuda_db.appsetting: ~8 rows (approximately)
 DELETE FROM `appsetting`;
 /*!40000 ALTER TABLE `appsetting` DISABLE KEYS */;
 INSERT INTO `appsetting` (`name`, `value`) VALUES
+	('footer_partner_img_path', 'frontend/img/footer/partner'),
 	('homepage_blog_displayed_item_number', '8'),
 	('homepage_blog_section_title', 'BLOGS'),
 	('homepage_gallery_img_path', 'frontend/img/homepage/gallery'),
@@ -36,6 +37,48 @@ INSERT INTO `appsetting` (`name`, `value`) VALUES
 	('homepage_layanan_title', 'LAYANAN KITA'),
 	('homepage_slider_img_path', 'frontend/img/homepage');
 /*!40000 ALTER TABLE `appsetting` ENABLE KEYS */;
+
+
+-- Dumping structure for table merakmuda_db.footer_emergency
+DROP TABLE IF EXISTS `footer_emergency`;
+CREATE TABLE IF NOT EXISTS `footer_emergency` (
+  `id` int(11) DEFAULT NULL,
+  `title` varchar(150) DEFAULT NULL,
+  `subtitle` varchar(150) DEFAULT NULL,
+  `telp` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table merakmuda_db.footer_emergency: ~1 rows (approximately)
+DELETE FROM `footer_emergency`;
+/*!40000 ALTER TABLE `footer_emergency` DISABLE KEYS */;
+INSERT INTO `footer_emergency` (`id`, `title`, `subtitle`, `telp`) VALUES
+	(1, 'KEPERLUAN DARURAT', 'Jika anda membutuhkan penanganan darurat, hubungi kami siap 24 jam', '0355-335571');
+/*!40000 ALTER TABLE `footer_emergency` ENABLE KEYS */;
+
+
+-- Dumping structure for table merakmuda_db.footer_partner
+DROP TABLE IF EXISTS `footer_partner`;
+CREATE TABLE IF NOT EXISTS `footer_partner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `nama` varchar(60) DEFAULT NULL,
+  `img` varchar(150) DEFAULT NULL,
+  `link` varchar(150) DEFAULT NULL,
+  `aktif` enum('Y','N') DEFAULT 'Y',
+  `order` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table merakmuda_db.footer_partner: ~0 rows (approximately)
+DELETE FROM `footer_partner`;
+/*!40000 ALTER TABLE `footer_partner` DISABLE KEYS */;
+INSERT INTO `footer_partner` (`id`, `created_at`, `updated_at`, `nama`, `img`, `link`, `aktif`, `order`) VALUES
+	(3, '2016-03-11 17:44:46', '2016-03-11 19:44:01', 'Danfoss', '0c76fda89be1dabc5814ae9bea94c34b.jpg', 'www.danfoss.com', 'Y', 1),
+	(4, '2016-03-11 17:44:56', '2016-03-11 19:23:52', 'Elpijis', '4388c978331bd74349210ee8b2877d72.png', 'www.pertamina.co.id/elpiji', 'Y', 2),
+	(5, '2016-03-11 19:18:09', '2016-03-11 19:18:09', 'CIGWELD', '674e48ba863e03fcb8dc6d1f1e6f9667.png', 'www.cigweld.com', 'Y', 3),
+	(6, '2016-03-11 19:18:39', '2016-03-11 19:20:26', 'C&U Japan', '0e68cd009eae921d09dc7785512be635.png', 'www.cnu.com', 'Y', 4);
+/*!40000 ALTER TABLE `footer_partner` ENABLE KEYS */;
 
 
 -- Dumping structure for table merakmuda_db.header_contact
@@ -77,11 +120,11 @@ CREATE TABLE IF NOT EXISTS `header_social_media` (
 DELETE FROM `header_social_media`;
 /*!40000 ALTER TABLE `header_social_media` DISABLE KEYS */;
 INSERT INTO `header_social_media` (`id`, `created_at`, `updated_at`, `name`, `value`, `aktif`, `order`) VALUES
-	(1, '2016-03-11 06:54:46', '2016-03-11 10:48:15', 'Facebook', 'merakmudagas', 'Y', 1),
-	(2, '2016-03-11 06:54:54', '2016-03-11 10:07:02', 'Twitter', '@merakmudagas', 'Y', 2),
-	(3, '2016-03-11 06:55:02', '2016-03-11 11:36:21', 'Google Plus', 'merak_muda_gas', 'N', 4),
-	(4, '2016-03-11 06:55:14', '2016-03-11 10:07:12', 'Instagram', 'merakmudagas', 'N', 5),
-	(5, '2016-03-11 06:55:23', '2016-03-11 10:07:15', 'Youtube', 'ytb_merakmudagas', 'Y', 3);
+	(1, '2016-03-11 06:54:46', '2016-03-11 17:32:37', 'Facebook', 'merakmudagas', 'Y', 1),
+	(2, '2016-03-11 06:54:54', '2016-03-11 17:29:58', 'Twitter', '@merakmudagas', 'Y', 2),
+	(3, '2016-03-11 06:55:02', '2016-03-11 17:29:59', 'Google Plus', 'merak_muda_gas', 'N', 3),
+	(4, '2016-03-11 06:55:14', '2016-03-11 17:30:00', 'Instagram', 'merakmudagas', 'N', 4),
+	(5, '2016-03-11 06:55:23', '2016-03-11 17:30:02', 'Youtube', 'ytb_merakmudagas', 'Y', 5);
 /*!40000 ALTER TABLE `header_social_media` ENABLE KEYS */;
 
 
@@ -150,13 +193,13 @@ CREATE TABLE IF NOT EXISTS `homepage_menu` (
 DELETE FROM `homepage_menu`;
 /*!40000 ALTER TABLE `homepage_menu` DISABLE KEYS */;
 INSERT INTO `homepage_menu` (`id`, `created_at`, `updated_at`, `nama`, `position`, `order`, `aktif`) VALUES
-	(1, '2016-03-11 11:23:48', '2016-03-11 11:24:15', 'HOME', 'TB', 1, 'Y'),
-	(2, '2016-03-11 11:23:58', '2016-03-11 11:23:58', 'ABOUT US', 'TB', 2, 'Y'),
-	(3, '2016-03-11 11:24:19', '2016-03-11 11:24:19', 'PRODUCTS', 'TB', 3, 'Y'),
-	(4, '2016-03-11 11:24:31', '2016-03-11 11:24:31', 'GALLERY', 'TB', 4, 'Y'),
-	(5, '2016-03-11 11:24:42', '2016-03-11 11:24:43', 'BLOG', 'TB', 5, 'Y'),
-	(6, '2016-03-11 11:24:54', '2016-03-11 11:24:57', 'PORTOFOLIO', 'TB', 6, 'Y'),
-	(7, '2016-03-11 11:25:04', '2016-03-11 11:25:05', 'CAREER', 'TB', 7, 'Y');
+	(1, '2016-03-11 11:23:48', '2016-03-11 14:20:51', 'HOME', 'TP', 1, 'Y'),
+	(2, '2016-03-11 11:23:58', '2016-03-11 14:20:53', 'ABOUT US', 'BT', 2, 'Y'),
+	(3, '2016-03-11 11:24:19', '2016-03-11 14:20:53', 'PRODUCTS', 'BT', 3, 'Y'),
+	(4, '2016-03-11 11:24:31', '2016-03-11 14:06:41', 'GALLERY', 'TP', 4, 'Y'),
+	(5, '2016-03-11 11:24:42', '2016-03-11 14:20:17', 'BLOG', 'BT', 5, 'Y'),
+	(6, '2016-03-11 11:24:54', '2016-03-11 14:20:18', 'PORTOFOLIO', 'TP', 6, 'Y'),
+	(7, '2016-03-11 11:25:04', '2016-03-11 14:14:10', 'CAREER', 'TB', 7, 'Y');
 /*!40000 ALTER TABLE `homepage_menu` ENABLE KEYS */;
 
 
@@ -207,11 +250,13 @@ CREATE TABLE IF NOT EXISTS `homepage_slider` (
   `list_item_5` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `list_item_5_color` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table merakmuda_db.homepage_slider: ~0 rows (approximately)
+-- Dumping data for table merakmuda_db.homepage_slider: ~1 rows (approximately)
 DELETE FROM `homepage_slider`;
 /*!40000 ALTER TABLE `homepage_slider` DISABLE KEYS */;
+INSERT INTO `homepage_slider` (`id`, `created_at`, `updated_at`, `img`, `aktif`, `order`, `type`, `title`, `title_color`, `second_title`, `second_title_color`, `subtitle`, `subtitle_color`, `list_item_1`, `list_item_1_color`, `list_item_2`, `list_item_2_color`, `list_item_3`, `list_item_3_color`, `list_item_4`, `list_item_4_color`, `list_item_5`, `list_item_5_color`) VALUES
+	(1, '2016-03-11 17:12:02', '2016-03-11 17:12:02', 'a7f606df50c621cf06db09ea01765baa.jpg', 'Y', 1, '1', 'KAMI BERIKAN', '#f95c06', 'LEBIH DARI YANG ANDA BAYANGKAN', '#ffff00', 'Merak Muda Gas merupakan perusahaan yang bergerak dalam bidang distribusi gas.', '#ffffff', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `homepage_slider` ENABLE KEYS */;
 
 
