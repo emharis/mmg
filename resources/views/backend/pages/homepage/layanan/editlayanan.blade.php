@@ -18,7 +18,6 @@
                     </td>
                     <td>
                         {!! Form::text('title',$data->title,['required','class'=>'form-control ','autocomplete'=>'off','maxlength'=>'30']) !!}
-
                     </td>
                 </tr>
                 <tr class="layanan-type-1" >
@@ -88,25 +87,6 @@
 
 <script>
     (function ($) {
-        //preview image
-
-//        $('#layanan_type').val([]);
-//        $('.layanan-type-1').hide();
-//        $('.layanan-type-2').hide();
-//        //select tipe layanan
-//        $('#layanan_type').change(function () {
-//            var img_url = $('#layanan_type option:selected').data('img');
-//            var type = $('#layanan_type option:selected').val();
-//            $('#layanan_type_preview').hide(0, null, function () {
-//                $('#layanan_type_preview').attr('src', img_url);
-//                $('#layanan_type_preview').fadeIn(250);
-//            });
-//            //hide all form
-//            $('.layanan-type-1').hide();
-//            $('.layanan-type-2').hide();
-//            //show & hide form
-//            $('.layanan-type-' + type).show();
-//        });
 //        //cek ukuran gambar
         $('#form-edit-layanan input[name=img-bottom-type-1]').change(function () {
             var imginput = $(this);
@@ -191,8 +171,10 @@
         
         //SAVE EDIT LAYANAN
         $('#form-edit-layanan').ajaxForm({
-            success:function(){
-                alert('Data telah disimpan.');
+            success:function(data){
+                //close modal
+                $('#modal-layanan').modal('hide');
+                //update layanana di table
             }
         });
         

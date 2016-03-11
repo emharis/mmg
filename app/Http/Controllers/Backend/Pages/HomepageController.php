@@ -29,13 +29,27 @@ class HomepageController extends Controller {
                 ->get();
         $layanan_section_title = \App\Helpers\Helper::appsetting('homepage_layanan_title');
 
+        //gallery
+        $gallery_title = \App\Helpers\Helper::appsetting('homepage_gallery_section_title');
+        $gallery_img_path = \App\Helpers\Helper::appsetting('homepage_gallery_img_path');
+        $galleryimg = \DB::table('homepage_gallery')->lists('img', 'img_no');
+
+        //BLOG
+        $homepage_blog_section_title = \App\Helpers\Helper::appsetting('homepage_blog_section_title');
+        $displayed_blog_item_number = \App\Helpers\Helper::appsetting('homepage_blog_displayed_item_number');
+
         return view('backend.pages.homepage.index', [
             'imgsliders' => $imgsliders,
             'leftmidcontent' => $leftmidcontent,
             'midmidcontent' => $midmidcontent,
             'rightmidcontent' => $rightmidcontent,
             'layanan' => $layanan,
-            'layanan_section_title' => $layanan_section_title
+            'layanan_section_title' => $layanan_section_title,
+            'gallery_section_title' => $gallery_title,
+            'gallery' => $galleryimg,
+            'gallery_img_path' => $gallery_img_path,
+            'blog_section_title' => $homepage_blog_section_title,
+            'displayed_blog_item_number' => $displayed_blog_item_number,
         ]);
     }
 
@@ -498,7 +512,7 @@ class HomepageController extends Controller {
                             'img_bottom' => $filename
                 ]);
             }
-        }elseif ($layanan->type == 2) {
+        } elseif ($layanan->type == 2) {
 
             //bottom image
             if ($request->hasFile('img-bottom-type-2')) {
@@ -521,6 +535,10 @@ class HomepageController extends Controller {
 
         if (!$request->ajax()) {
             return redirect('admin/pages/homepage');
+        }else{
+            $layanan = \DB::table('homepage_layanan')
+                ->find($request->input('layanan_id'));
+            echo json_encode($layanan);
         };
     }
 
@@ -534,5 +552,61 @@ class HomepageController extends Controller {
 
     /**
      * End Of Layanan Section
+     */
+
+    /**
+     * GALLERY SECTION
+     */
+    public function updateSectionGallery(Request $request) {
+        //update section title
+        \App\Helpers\Helper::updateappsetting('homepage_gallery_section_title', $request->input('gallery_section_title'));
+
+        if (!$request->ajax()) {
+            return redirect('admin/pages/homepage');
+        };
+    }
+
+    //simpan image gallery berdasarkan posisi nya
+    public function setImageGallery(Request $request) {
+        $img_pos = $request->input('image_position');
+        if ($request->hasFile('homepage_gallery_' . $img_pos)) {
+            //hapus dulu file yang lama
+            $img = \DB::table('homepage_gallery')->where('img_no', '=', $img_pos)->first();
+            if ($img->img != '') {
+                \File::delete(\App\Helpers\Helper::appsetting('homepage_gallery_img_path') . '/' . $img->img);
+            }
+
+            $file = $request->file('homepage_gallery_' . $img_pos);
+            $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
+            if ($file->isValid()) {
+                $file->move(\App\Helpers\Helper::appsetting('homepage_gallery_img_path'), $filename);
+            }
+
+            //update nama file di database
+            \DB::table('homepage_gallery')
+                    ->where('img_no', $img_pos)
+                    ->update([
+                        'img' => $filename
+            ]);
+        }
+    }
+
+    /**
+     * END OF GALLERY SECTION
+     */
+
+    /**
+     * BLOG SECTION 
+     */
+    public function updateSectionTitleBlog(Request $request) {
+        \App\Helpers\Helper::updateappsetting('homepage_blog_section_title', $request->input('blog_section_title'));
+        \App\Helpers\Helper::updateappsetting('homepage_blog_displayed_item_number', $request->input('displayed_blog_item_number'));
+        if (!$request->ajax()) {
+            return redirect('admin/pages/homepage');
+        };
+    }
+
+    /**
+     * END OF BLOG SECTION
      */
 }

@@ -35,7 +35,7 @@
             <li><a href="#tab_2" data-toggle="tab">Middle Content</a></li>
             <li><a href="#tab_3" data-toggle="tab">Layanan</a></li>
             <li><a href="#tab_4" data-toggle="tab">Gallery</a></li>
-            <li><a href="#tab_4" data-toggle="tab">Blogs</a></li>
+            <li><a href="#tab_5" data-toggle="tab">Blogs</a></li>
 
         </ul>
         <div class="tab-content">
@@ -49,22 +49,10 @@
                 @include('backend.pages.homepage.layanan.layanan')
             </div><!-- /.tab-pane -->
             <div class="tab-pane" id="tab_4">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                like Aldus PageMaker including versions of Lorem Ipsum.
+                @include('backend.pages.homepage.gallery.gallery')
             </div><!-- /.tab-pane -->
             <div class="tab-pane" id="tab_5">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                like Aldus PageMaker including versions of Lorem Ipsum.
+                @include('backend.pages.homepage.blogs.blogs')
             </div><!-- /.tab-pane -->
         </div><!-- /.tab-content -->
     </div><!-- nav-tabs-custom -->

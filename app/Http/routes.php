@@ -104,12 +104,24 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
     Route::get('pages/homepage/edit-layanan/{id}',['as'=>'admin.pages.homepage.edit-layanan','uses'=>'Pages\HomepageController@editLayanan']);
     Route::post('pages/homepage/update-section-layanan',['as'=>'admin.pages.homepage.update-section-layanan','uses'=>'Pages\HomepageController@updateSectionLayanan']);
     Route::post('pages/homepage/update-layanan',['as'=>'admin.pages.homepage.update-layanan','uses'=>'Pages\HomepageController@updateLayanan']);
+    //pages >> Homepage >> Gallery
+    Route::post('pages/homepage/update-section-gallery',['as'=>'admin.pages.homepage.update-section-gallery','uses'=>'Pages\HomepageController@updateSectionGallery']);
+    Route::post('pages/homepage/set-image-gallery',['as'=>'admin.pages.homepage.set-image-gallery','uses'=>'Pages\HomepageController@setImageGallery']);
+    //pages >> Homepage >> Blog
+    Route::post('pages/homepage/update-section-title-blog',['as'=>'admin.pages.homepage.update-section-title-blog','uses'=>'Pages\HomepageController@updateSectionTitleBlog']);
+    
+    //Pages >> Header & Footer
+    Route::get('pages/headfoot',['as'=>'admin.pages.headfoot','uses'=>'Pages\HeadfootController@index']);
+
     
     //Pages >> About
     Route::get('pages/about',['as'=>'admin.pages.about','uses'=>'Pages\AboutController@index']);
     
     
-    
+    Route::get('test',function(){
+        $img = \DB::table('homepage_gallery')->lists('img','img_no');
+        print_r($img);
+    });
     
 //    Route::group(['middleware' => 'auth'], function () {
 //        // Dashboard
