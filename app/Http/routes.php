@@ -110,8 +110,15 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
     //pages >> Homepage >> Blog
     Route::post('pages/homepage/update-section-title-blog',['as'=>'admin.pages.homepage.update-section-title-blog','uses'=>'Pages\HomepageController@updateSectionTitleBlog']);
     
-    //Pages >> Header & Footer
+    //Pages >> Header & Footer >> SOSMED
     Route::get('pages/headfoot',['as'=>'admin.pages.headfoot','uses'=>'Pages\HeadfootController@index']);
+    Route::get('pages/headfoot/set-aktif/{id}/{aktif}',['as'=>'admin.pages.headfoot.set-aktif','uses'=>'Pages\HeadfootController@setAktif']);
+    Route::get('pages/headfoot/shift-up/{id}',['as'=>'admin.pages.headfoot.shift-up','uses'=>'Pages\HeadfootController@shiftUp']);
+    Route::get('pages/headfoot/shift-down/{id}',['as'=>'admin.pages.headfoot.shift-down','uses'=>'Pages\HeadfootController@shiftDown']);
+    Route::get('pages/headfoot/update-sosmed/{id}/{val}',['as'=>'admin.pages.headfoot.update-sosmed','uses'=>'Pages\HeadfootController@updateSosmed']);
+    Route::post('pages/headfoot/update-contact',['as'=>'admin.pages.headfoot.update-contact','uses'=>'Pages\HeadfootController@updateContact']);
+    //Pages >> Header & Footer >> Contact
+    Route::get('pages/headfoot/set-aktif-contact/{id}/{aktif}',['as'=>'admin.pages.headfoot.set-aktif-contact','uses'=>'Pages\HeadfootController@setAktifContact']);
 
     
     //Pages >> About
