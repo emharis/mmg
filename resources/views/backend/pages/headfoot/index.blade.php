@@ -10,7 +10,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Header & Footer
+        Menu, Header & Footer
     </h1>
 </section>
 

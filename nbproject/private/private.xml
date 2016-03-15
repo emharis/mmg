@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/media/data/PROJECTS/WEB_SRC/mmg/resources/views/backend/layouts/master.blade.php</file>
-            <file>file:/media/data/PROJECTS/WEB_SRC/mmg/resources/views/backend/pages/homepage/index.blade.php</file>
-            <file>file:/media/data/PROJECTS/WEB_SRC/mmg/resources/views/backend/pages/homepage/midcontent/left.blade.php</file>
-            <file>file:/media/data/PROJECTS/WEB_SRC/mmg/resources/views/backend/pages/homepage/gallery/gallery.blade.php</file>
-            <file>file:/media/data/PROJECTS/WEB_SRC/mmg/app/Http/Controllers/Backend/Pages/HomepageController.php</file>
+            <file>file:/media/data/PROJECTS/WEB_SRC/mmg/app/Http/Controllers/Backend/Pages/ProductController.php</file>
             <file>file:/media/data/PROJECTS/WEB_SRC/mmg/app/Http/routes.php</file>
+            <file>file:/media/data/PROJECTS/WEB_SRC/mmg/resources/views/backend/pages/product/product/index.blade.php</file>
         </group>
     </open-files>
 </project-private>

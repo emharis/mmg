@@ -137,7 +137,24 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
     
     //Pages >> About
     Route::get('pages/about', ['as' => 'admin.pages.about', 'uses' => 'Pages\AboutController@index']);
+    Route::get('pages/about/shift-up-desc/{id}', ['as' => 'admin.pages.about.shift-up-desc', 'uses' => 'Pages\AboutController@shiftUpDesc']);
+    Route::get('pages/about/shift-down-desc/{id}', ['as' => 'admin.pages.about.shift-down-desc', 'uses' => 'Pages\AboutController@shiftDownDesc']);
+    Route::get('pages/about/delete-desc/{id}', ['as' => 'admin.pages.about.delete-desc', 'uses' => 'Pages\AboutController@deleteDesc']);
+//    Route::post('pages/about/update-about-desc', ['as' => 'admin.pages.about.update-about-desc', 'uses' => 'Pages\AboutController@updateAboutDesc']);
+    Route::post('pages/about/new-desc', ['as' => 'admin.pages.about.new-desc', 'uses' => 'Pages\AboutController@newDesc']);
+    Route::get('pages/about/edit/{id}', ['as' => 'admin.pages.about.edit', 'uses' => 'Pages\AboutController@edit']);
 
+    //Pages >> Product >> Kateori
+    Route::get('pages/product', ['as' => 'admin.pages.product', 'uses' => 'Pages\ProductController@index']);
+    Route::post('pages/product/new-kategori', ['as' => 'admin.pages.product.new-kategori', 'uses' => 'Pages\ProductController@newKategori']);
+    Route::get('pages/product/edit-kategori/{id}', ['as' => 'admin.pages.product.edit-kategori', 'uses' => 'Pages\ProductController@editKategori']);
+    Route::post('pages/product/update-kategori', ['as' => 'admin.pages.product.update-kategori', 'uses' => 'Pages\ProductController@updateKategori']);
+    Route::get('pages/product/delete-kategori/{id}', ['as' => 'admin.pages.product.delete-kategori', 'uses' => 'Pages\ProductController@deleteKategori']);
+    Route::get('pages/product/shift-up-kategori/{id}', ['as' => 'admin.pages.product.shift-up-kategori', 'uses' => 'Pages\ProductController@shiftUpKategori']);
+    Route::get('pages/product/shift-down-kategori/{id}', ['as' => 'admin.pages.product.shift-down-kategori', 'uses' => 'Pages\ProductController@shiftDownKategori']);
+    Route::get('pages/product/kategori', ['as' => 'admin.pages.product.kategori', 'uses' => 'Pages\ProductController@kategori']);    
+    //Pages >> Product >> Produk
+    Route::post('pages/product/new-produk', ['as' => 'admin.pages.product.new-produk', 'uses' => 'Pages\ProductController@newProduk']);
 
     Route::get('test', function() {
         $img = \DB::table('homepage_gallery')->lists('img', 'img_no');
