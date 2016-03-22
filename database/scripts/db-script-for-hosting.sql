@@ -10,12 +10,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping database structure for merakmuda_db
-DROP DATABASE IF EXISTS `merakmuda_db`;
-CREATE DATABASE IF NOT EXISTS `merakmuda_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `merakmuda_db`;
-
-
 -- Dumping structure for table merakmuda_db.about_description
 DROP TABLE IF EXISTS `about_description`;
 CREATE TABLE IF NOT EXISTS `about_description` (
@@ -105,7 +99,6 @@ INSERT INTO `appsetting` (`name`, `value`) VALUES
 	('about_page_description_img_path', 'frontend/img/about/desc'),
 	('about_page_section_title', 'Sejarah'),
 	('footer_partner_img_path', 'frontend/img/footer/partner'),
-	('gallery_img_path', 'frontend/img/gallery'),
 	('homepage_blog_displayed_item_number', '8'),
 	('homepage_blog_section_title', 'BLOGS'),
 	('homepage_gallery_img_path', 'frontend/img/homepage/gallery'),
@@ -158,60 +151,6 @@ INSERT INTO `footer_partner` (`id`, `created_at`, `updated_at`, `nama`, `img`, `
 	(5, '2016-03-11 19:18:09', '2016-03-11 19:18:09', 'CIGWELD', '674e48ba863e03fcb8dc6d1f1e6f9667.png', 'www.cigweld.com', 'Y', 3),
 	(6, '2016-03-11 19:18:39', '2016-03-11 19:20:26', 'C&U Japan', '0e68cd009eae921d09dc7785512be635.png', 'www.cnu.com', 'Y', 4);
 /*!40000 ALTER TABLE `footer_partner` ENABLE KEYS */;
-
-
--- Dumping structure for table merakmuda_db.gallery
-DROP TABLE IF EXISTS `gallery`;
-CREATE TABLE IF NOT EXISTS `gallery` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `kategori_id` int(11) DEFAULT NULL,
-  `img` varchar(250) DEFAULT NULL,
-  `youtube_url` varchar(250) DEFAULT NULL,
-  `title` varchar(30) DEFAULT NULL,
-  `subtitle` varchar(30) DEFAULT NULL,
-  `type` enum('I','V') DEFAULT 'I',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
-
--- Dumping data for table merakmuda_db.gallery: ~8 rows (approximately)
-DELETE FROM `gallery`;
-/*!40000 ALTER TABLE `gallery` DISABLE KEYS */;
-INSERT INTO `gallery` (`id`, `created_at`, `updated_at`, `kategori_id`, `img`, `youtube_url`, `title`, `subtitle`, `type`) VALUES
-	(1, '2016-03-18 10:24:20', '2016-03-18 10:24:20', 7, 'ba822967af84ac4778e2c01146b835c4.jpg', NULL, 'Foto Bersama', 'Foto bareng tim merak muda gas', 'I'),
-	(2, '2016-03-18 10:24:45', '2016-03-18 10:24:45', 7, '5a955017739e196335f59587d2e5e42d.jpg', NULL, 'foto cewek', 'foto cewek asik', 'I'),
-	(3, '2016-03-18 10:48:18', '2016-03-18 10:48:18', 7, '4d4ef2099c6e2fdd4206f123ea7109d8.jpg', NULL, 'Touring Gaja', 'Gajah Touring Bersama Kluarga', 'I'),
-	(6, '2016-03-18 11:27:47', '2016-03-18 11:27:47', 11, '98e8565f0adb74d48eaa646afe0a613e.jpg', NULL, 'Burung Ijo', 'Ijo Burungnya', 'I'),
-	(8, '2016-03-18 11:29:33', '2016-03-18 11:29:33', 11, 'c9bee090bebb87fe2749d653e335ff4c.jpg', NULL, 'Jerapa Afrika', 'di Afrika ada Jerapah', 'I'),
-	(9, '2016-03-18 11:30:47', '2016-03-18 11:30:48', 11, '2c4b0763f1ee4fb391519a4bc5f92cf3.jpg', NULL, 'Kelinci', 'Kelinci sedang berciuman', 'I'),
-	(10, '2016-03-18 12:49:42', '2016-03-18 12:49:42', 9, 'https://i.ytimg.com/vi/A8heeP16TIc/hqdefault.jpg', 'https://www.youtube.com/watch?v=A8heeP16TIc', 'KTM', 'KTM Duke', 'V'),
-	(11, '2016-03-18 14:45:55', '2016-03-18 14:45:55', 11, '413c39732711705e40a380ea0970f842.jpg', NULL, 'beautiful bird', 'beautiful bird love', 'I'),
-	(12, '2016-03-18 14:49:02', '2016-03-18 14:49:02', 11, '564d07a40b03e329f08feee65bcb5cee.jpg', NULL, 'Green Snake', '', 'I'),
-	(13, '2016-03-18 14:49:48', '2016-03-18 14:49:48', 9, 'https://i.ytimg.com/vi/8mIbY13n4uA/hqdefault.jpg', 'https://www.youtube.com/watch?v=8mIbY13n4uA', 'Yamaha WR 125 R', '', 'V');
-/*!40000 ALTER TABLE `gallery` ENABLE KEYS */;
-
-
--- Dumping structure for table merakmuda_db.gallery_kategori
-DROP TABLE IF EXISTS `gallery_kategori`;
-CREATE TABLE IF NOT EXISTS `gallery_kategori` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `nama` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
-
--- Dumping data for table merakmuda_db.gallery_kategori: ~4 rows (approximately)
-DELETE FROM `gallery_kategori`;
-/*!40000 ALTER TABLE `gallery_kategori` DISABLE KEYS */;
-INSERT INTO `gallery_kategori` (`id`, `created_at`, `updated_at`, `nama`) VALUES
-	(7, '2016-03-17 11:16:48', '2016-03-17 11:16:48', 'purging'),
-	(8, '2016-03-17 11:16:51', '2016-03-17 11:16:51', 'semproting'),
-	(9, '2016-03-18 10:53:43', '2016-03-18 10:53:43', 'Dirt BIke'),
-	(10, '2016-03-18 10:55:22', '2016-03-18 10:55:22', 'Car'),
-	(11, '2016-03-18 11:27:30', '2016-03-18 11:27:30', 'Animals');
-/*!40000 ALTER TABLE `gallery_kategori` ENABLE KEYS */;
 
 
 -- Dumping structure for table merakmuda_db.header_contact
@@ -448,15 +387,16 @@ CREATE TABLE IF NOT EXISTS `produk` (
   `price` int(11) DEFAULT NULL,
   `aktif` enum('Y','N') DEFAULT 'Y',
   `kategori_id` int(11) DEFAULT NULL,
-  `img` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_produk_kategori` (`kategori_id`),
   CONSTRAINT `FK_produk_kategori` FOREIGN KEY (`kategori_id`) REFERENCES `kategori` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table merakmuda_db.produk: ~0 rows (approximately)
 DELETE FROM `produk`;
 /*!40000 ALTER TABLE `produk` DISABLE KEYS */;
+INSERT INTO `produk` (`id`, `created_at`, `updated_at`, `nama`, `sub_desc`, `desc`, `price`, `aktif`, `kategori_id`) VALUES
+	(1, '2016-03-14 12:51:14', '2016-03-14 12:51:14', 'Acetylene (C2H2)', 'Struktur kimia yang tidak stabil, dapat terbakar ataupun meledak.', 'Acetylene adalah gas yang sangat mudah terbakar . Hal ini berbeda dari gas yang mudah terbakar lainnya\r\nkarena acetylene bersifat tidak stabil . Dalam kondisi tertentu , dapat berdekomposisi secara eksplosif\r\nmenjadi elemen-elemen penyusunnya , karbon dan hidrogen .', NULL, 'Y', 1);
 /*!40000 ALTER TABLE `produk` ENABLE KEYS */;
 
 
@@ -553,23 +493,6 @@ INSERT INTO `user_role` (`id`, `created_at`, `updated_at`, `user_id`, `role_id`)
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 
 
--- Dumping structure for view merakmuda_db.VIEW_GALLERY
-DROP VIEW IF EXISTS `VIEW_GALLERY`;
--- Creating temporary table to overcome VIEW dependency errors
-CREATE TABLE `VIEW_GALLERY` (
-	`id` INT(11) NOT NULL,
-	`created_at` DATETIME NULL,
-	`updated_at` DATETIME NULL,
-	`kategori_id` INT(11) NULL,
-	`kategori` VARCHAR(100) NULL COLLATE 'utf8_general_ci',
-	`img` VARCHAR(250) NULL COLLATE 'utf8_general_ci',
-	`youtube_url` VARCHAR(250) NULL COLLATE 'utf8_general_ci',
-	`title` VARCHAR(30) NULL COLLATE 'utf8_general_ci',
-	`subtitle` VARCHAR(30) NULL COLLATE 'utf8_general_ci',
-	`type` ENUM('I','V') NULL COLLATE 'utf8_general_ci'
-) ENGINE=MyISAM;
-
-
 -- Dumping structure for view merakmuda_db.VIEW_PRODUK
 DROP VIEW IF EXISTS `VIEW_PRODUK`;
 -- Creating temporary table to overcome VIEW dependency errors
@@ -585,13 +508,6 @@ CREATE TABLE `VIEW_PRODUK` (
 	`kategori_id` INT(11) NULL,
 	`kategori` VARCHAR(100) NULL COLLATE 'utf8_general_ci'
 ) ENGINE=MyISAM;
-
-
--- Dumping structure for view merakmuda_db.VIEW_GALLERY
-DROP VIEW IF EXISTS `VIEW_GALLERY`;
--- Removing temporary table and create final VIEW structure
-DROP TABLE IF EXISTS `VIEW_GALLERY`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `VIEW_GALLERY` AS select `gallery`.`id` AS `id`,`gallery`.`created_at` AS `created_at`,`gallery`.`updated_at` AS `updated_at`,`gallery`.`kategori_id` AS `kategori_id`,`gallery_kategori`.`nama` AS `kategori`,`gallery`.`img` AS `img`,`gallery`.`youtube_url` AS `youtube_url`,`gallery`.`title` AS `title`,`gallery`.`subtitle` AS `subtitle`,`gallery`.`type` AS `type` from (`gallery` join `gallery_kategori` on((`gallery`.`kategori_id` = `gallery_kategori`.`id`)));
 
 
 -- Dumping structure for view merakmuda_db.VIEW_PRODUK

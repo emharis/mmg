@@ -134,7 +134,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
     Route::get('pages/headfoot/update-aktif-partner/{id}/{aktif}', ['as' => 'admin.pages.headfoot.update-aktif-partner', 'uses' => 'Pages\HeadfootController@updateAktifPartner']);
     Route::get('pages/headfoot/edit-partner/{id}', ['as' => 'admin.pages.headfoot.edit-partner', 'uses' => 'Pages\HeadfootController@editPartner']);
     Route::post('pages/headfoot/update-partner', ['as' => 'admin.pages.headfoot.update-partner', 'uses' => 'Pages\HeadfootController@updatePartner']);
-    
+
     //Pages >> About
     Route::get('pages/about', ['as' => 'admin.pages.about', 'uses' => 'Pages\AboutController@index']);
     Route::get('pages/about/shift-up-desc/{id}', ['as' => 'admin.pages.about.shift-up-desc', 'uses' => 'Pages\AboutController@shiftUpDesc']);
@@ -152,13 +152,33 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
     Route::get('pages/product/delete-kategori/{id}', ['as' => 'admin.pages.product.delete-kategori', 'uses' => 'Pages\ProductController@deleteKategori']);
     Route::get('pages/product/shift-up-kategori/{id}', ['as' => 'admin.pages.product.shift-up-kategori', 'uses' => 'Pages\ProductController@shiftUpKategori']);
     Route::get('pages/product/shift-down-kategori/{id}', ['as' => 'admin.pages.product.shift-down-kategori', 'uses' => 'Pages\ProductController@shiftDownKategori']);
-    Route::get('pages/product/kategori', ['as' => 'admin.pages.product.kategori', 'uses' => 'Pages\ProductController@kategori']);    
+    Route::get('pages/product/kategori', ['as' => 'admin.pages.product.kategori', 'uses' => 'Pages\ProductController@kategori']);
     //Pages >> Product >> Produk
     Route::post('pages/product/new-produk', ['as' => 'admin.pages.product.new-produk', 'uses' => 'Pages\ProductController@newProduk']);
+    Route::get('pages/product/edit-product/{id}', ['as' => 'admin.pages.product.edit-product', 'uses' => 'Pages\ProductController@editProduct']);
+    Route::get('pages/product/delete-product/{id}', ['as' => 'admin.pages.product.delete-product', 'uses' => 'Pages\ProductController@deleteProduct']);
+    Route::post('pages/product/update-product', ['as' => 'admin.pages.product.update-product', 'uses' => 'Pages\ProductController@updateProduct']);
+
+    //Pages >> Gallery
+    Route::get('pages/gallery', ['as' => 'admin.pages.gallery', 'uses' => 'Pages\GalleryController@index']);
+    Route::get('pages/gallery/gallery', ['as' => 'admin.pages.gallery.gallery', 'uses' => 'Pages\GalleryController@gallery']);
+    Route::post('pages/gallery/new-gallery', ['as' => 'admin.pages.gallery.new-gallery', 'uses' => 'Pages\GalleryController@newGallery']);
+    Route::post('pages/gallery/get-youtube', ['as' => 'admin.pages.gallery.get-youtube', 'uses' => 'Pages\GalleryController@getYoutube']);
+    Route::post('pages/gallery/update-gallery-title', ['as' => 'admin.pages.gallery.update-gallery-title', 'uses' => 'Pages\GalleryController@updateGalleryTitle']);
+    //Pages >> Gallery >> Kategori
+    Route::post('pages/gallery/new-kategori', ['as' => 'admin.pages.new-kategori', 'uses' => 'Pages\GalleryController@newKategori']);
+    Route::post('pages/gallery/update-kategori', ['as' => 'admin.pages.update-kategori', 'uses' => 'Pages\GalleryController@updateKategori']);
+    Route::get('pages/gallery/delete-kategori/{id}', ['as' => 'admin.pages.delete-kategori', 'uses' => 'Pages\GalleryController@deleteKategori']);
 
     Route::get('test', function() {
-        $img = \DB::table('homepage_gallery')->lists('img', 'img_no');
-        print_r($img);
+
+        $url = 'https://www.youtube.com/watch?v=YPueCndxb7c&index=11&list=PLD6AE05305CFCF904';
+        $ytdata = json_decode(file_get_contents(sprintf('http://www.youtube.com/oembed?url=%s&format=json', urlencode($url))));
+        echo print_r($ytdata);
+//        foreach($ytdata as $dt){
+//            echo print_r($dt) . '<br/>';
+//        }
+//        print_r(json_decode(file_get_contents(sprintf('http://www.youtube.com/oembed?url=%s&format=json', urlencode($url)))));
     });
 
 //    Route::group(['middleware' => 'auth'], function () {

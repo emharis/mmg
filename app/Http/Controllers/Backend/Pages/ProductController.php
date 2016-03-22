@@ -10,7 +10,7 @@ class ProductController extends Controller {
 
     public function index() {
         $kategori = \DB::table('kategori')->orderBy('order', 'asc')->get();
-        
+
         $produk = \DB::table('VIEW_PRODUK')->orderBy('kategori_id')->get();
         return view('backend.pages.product.index', [
             'kategori' => $kategori,
@@ -136,20 +136,18 @@ class ProductController extends Controller {
             
         };
     }
-    
-    public function kategori(){
-        $kategori = \DB::table('kategori')->select(['id','nama'])->get();
+
+    public function kategori() {
+        $kategori = \DB::table('kategori')->select(['id', 'nama'])->get();
 //        return json_encode($kategori);
         echo json_encode($kategori);
     }
-    
-    
+
     /**
      * PRODUCT SECTION
      */
-    
     //new produkc
-    public function newProduk(Request $request){
+    public function newProduk(Request $request) {
         $id = \DB::table('produk')->insertGetId([
             'nama' => $request->input('produk_nama'),
             'sub_desc' => $request->input('produk_subdesc'),
@@ -157,17 +155,109 @@ class ProductController extends Controller {
             'price' => $request->input('price'),
             'kategori_id' => $request->input('kategori'),
         ]);
-        
-//        if (!$request->ajax()) {
-//            return redirect('admin/pages/product');
-//        } else {
-//            $data = \DB::table('VIEW_PRODUK')->find($id);
-//            echo json_encode($data);
-//        };
+
+        //cek apakah punya gambar
+        if ($request->hasFile('produk_img')) {
+            $file = $request->file('produk_img');
+            $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
+            if ($file->isValid()) {
+                $file->move(\App\Helpers\Helper::appsetting('product_img_path'), $filename);
+            }
+
+            //update nama file di database
+            \DB::table('produk')
+                    ->whereId($id)
+                    ->update([
+                        'img' => $filename
+            ]);
+        }
+
+        if (!$request->ajax()) {
+            return redirect('admin/pages/product');
+        } else {
+            $data = \DB::table('VIEW_PRODUK')->find($id);
+            echo json_encode($data);
+        };
     }
-    
+
+    //edit product
+    public function editProduct($id, Request $request) {
+        $data = \DB::table('produk')->find($id);
+        //tambahkan img path
+        $data->imgpath = \App\Helpers\Helper::appsetting('product_img_path');
+
+        $kategori = \DB::table('kategori')->select(['id', 'nama'])->get();
+        $slc_kategori = array();
+        foreach ($kategori as $kat) {
+            $slc_kategori[$kat->id] = $kat->nama;
+        }
+        return view('backend.pages.product.product.edit', [
+            'data' => $data,
+            'slc_kategori' => $slc_kategori,
+        ]);
+    }
+
+    //simpan perubahan data produk
+    public function updateProduct(Request $request) {
+        $data = \DB::table('produk')->find($request->input('product_id'));
+        \DB::table('produk')
+                ->whereId($request->input('product_id'))
+                ->update([
+                    'nama' => $request->input('produk_edit_nama'),
+                    'sub_desc' => $request->input('produk_edit_subdesc'),
+                    'desc' => $request->input('produk_edit_desc'),
+                    'price' => $request->input('produk_edit_price'),
+                    'kategori_id' => $request->input('produk_edit_kategori'),
+                    'aktif' => $request->input('produk_edit_aktif'),
+        ]);
+
+        //cek apakah ada file gambar yang di upload
+        if ($request->hasFile('produk_edit_img')) {
+            $file = $request->file('produk_edit_img');
+            $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
+            if ($file->isValid()) {
+                //delete file yang lama
+                \File::delete(\App\Helpers\Helper::appsetting('product_img_path') . '/' . $data->img);
+
+                //simpan file yang baru
+                $file->move(\App\Helpers\Helper::appsetting('product_img_path'), $filename);
+            }
+
+            //update nama file di database
+            \DB::table('produk')
+                    ->whereId($id)
+                    ->update([
+                        'img' => $filename
+            ]);
+        }
+
+        if (!$request->ajax()) {
+            return redirect('admin/pages/product');
+        } else {
+            $data = \DB::table('VIEW_PRODUK')->find($data->id);
+            echo json_encode($data);
+        };
+    }
+
+    //deletee product
+    public function deleteProduct($id, Request $request) {
+        $data = \DB::table('produk')
+                ->find($id);
+        if ($data->img != '') {
+            //hapus file image jika ada
+            \File::delete(\App\Helpers\Helper::appsetting('product_img_path') . '/' . $data->img);
+        }
+
+        //delete dari database
+        \DB::table('produk')
+                ->delete($id);
+
+        if (!$request->ajax()) {
+            return redirect('admin/pages/product');
+        }
+    }
+
     /**
      * END OF PRODUCT SECTION
      */
-
 }
