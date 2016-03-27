@@ -104,20 +104,33 @@
         @foreach($gallery as $dt)
         <?php $type = $dt->type == 'I' ? 'gal-image' : 'gal-video'; ?>
         <?php $href = $dt->type == 'I' ? $imgpath . '/' . $dt->img : $dt->youtube_url; ?>
-        <?php $iframe = $dt->type == 'I' ? '' : '.iframe youtube-fancybox'; ?>
+        <?php $fancyboxclass = $dt->type == 'I' ? 'fancybox-img' : 'fancybox-ytb'; ?>
         <?php $logo_type = $dt->type == 'I' ? 'fa-image' : 'fa-youtube'; ?>
-        <div class="col-sm-3 col-md-3 col-lg-3 {{$type}} gal-kat-{{$dt->kategori_id}}" >    
+        <div class="col-sm-3 col-md-3 col-lg-3 {{$type}} gal-kat-{{$dt->kategori_id}}" id="gallery-thumb-{{$dt->id}}" >    
             <div class="thumbnail">
-                <a class="fancybox{{$iframe}}" rel="group" href="{{$href}}" title="{{$dt->title}}" >
+                <a class="{{$fancyboxclass}}" rel="group" href="{{$href}}" title="{{$dt->title}}" >
                     @if($dt->type == 'I')
                     <img  src="{{$href}}" class="img-responsive gal-img" />
                     @else
                     <img src="{{ $dt->img}}" class="img-responsive gal-ytb" />
                     @endif
                 </a>
-                <div class="caption">                        
-                    <h5><i class="fa {{$logo_type}}" ></i> &nbsp;<span>{{$dt->title}}</span> <a data-id="{{$dt->id}}" class="pull-right btn-edit-gallery" href="#" ><i class="fa fa-edit" ></i></a></h5>
-                </div>
+                <br/>
+
+                <form class="form-update-gallery" method="POST" action="admin/pages/gallery/update-gallery-title" >
+                    <input type="hidden" name="id" value="{{$dt->id}}"/>
+                    <div class="input-group" >
+                        <input autocomplete="off" type="text" name="title" class="form-control input-gallery-title-edit input-sm" value="{{$dt->title}}" />
+                        <div class="input-group-btn" >
+                            <button type="submit" class="btn btn-primary btn-sm" ><i class="fa fa-save" ></i></button>
+                            <a class="btn btn-danger btn-sm btn-delete-gallery" href="admin/pages/gallery/delete-gallery/{{$dt->id}}" ><i class="fa fa-trash" ></i></a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class = "caption">
+
             </div>
         </div>
         @endforeach
@@ -126,13 +139,8 @@
 
     <!--</div>-->
 
-
 </section><!-- /.content -->
 
-<!--<form method="POST" action="admin/pages/gallery/get-youtube">
-    <input type="text" name="url"/>
-    <button type="submit" >Test</button>
-</form>-->
 
 @stop
 
@@ -141,6 +149,8 @@
 <script src="https://npmcdn.com/masonry-layout@4.0/dist/masonry.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-media.js" ></script>
+
 <script>
 (function ($) {
     //set to null select element
@@ -257,32 +267,36 @@
     });
 
     //fancybox
-    $(".fancybox").fancybox({
+    $(".fancybox-img").fancybox({
         openEffect: 'elastic',
         closeEffect: 'elastic',
+        arrows: false,
         helpers: {
             title: {
                 type: 'inside'
             }
         }
     });
-    $(".youtube-fancybox").fancybox({
+//    $(".fancybox-ytb").fancybox({
+//        openEffect: 'none',
+//        closeEffect: 'none',
+//        helpers: {
+//            media: {}
+//        }
+//    });
+    $(".fancybox-ytb").fancybox({
         openEffect: 'elastic',
         closeEffect: 'elastic',
-        maxWidth: 800,
-        maxHeight: 600,
         fitToView: false,
         width: '70%',
         height: '70%',
-        autoSize: false,
-        closeClick: false,
-        openEffect: 'none',
-        closeEffect: 'none',
-                helpers: {
-                    title: {
-                        type: 'inside'
-                    }
-                }
+        arrows: false,
+        helpers: {
+            title: {
+                type: 'inside'
+            },
+            media: {}
+        }
     });
 
     //filter
@@ -292,18 +306,68 @@
 //            alert(filter);
         $('.mmg-gallery').isotope({filter: _filter});
     });
-    
+
     //edit gallery
-    $('.btn-edit-gallery').click(function(){
+    $('.btn-edit-gallery').click(function () {
         var id = $(this).data('id');
         var span = $(this).prev();
-        var formedit = '<form method="POST" action="admin/pages/gallery/update-gallery-title" >\n\
-                            <input type="text" name="input_edit_nama_gallery" value="' + span.text() + '" />\n\
-                        </form>';
+        var formedit = '<form name="form-update-gallery"  method="POST" action="admin/pages/gallery/update-gallery-title" >\n\
+                        <input type="hidden" name="id" value="' + id + '" />\n\
+                        <table class="table table-bordered table-condensed" >\n\
+                            <tbody>\n\
+                                <tr>\n\
+                                    <td>\n\
+                                        <div class="input-group">\n\
+                                            <input autocomplete="off" value="' + span.text() + '" type="text" class="form-control input-sm" name="title" />\n\
+                                            <div class="input-group-btn">\n\
+                                                <button type="submit" class="btn btn-primary btn-sm" ><i class="fa fa-save" ></i></button>\n\
+                                            </div>\n\
+                                        </div>\n\
+                                    </td>\n\
+                                </tr>\n\
+                            </tbody>\n\
+                        </table>\n\
+                    </form>';
+
         span.html(formedit)
         return false;
     });
-    
+
+    //update gallery title
+//    $('form[name=form-update-gallery]').ajaxForm({
+//        success:function(){
+//            alert('sukses');
+//        }
+//    });
+
+    $(document).on('submit', 'form.form-update-gallery', function () {
+//        alert('submitting');
+        var form = $(this);
+        form.ajaxSubmit(function () {
+//            $('form[name=form-update-gallery]').hide();
+            alert('Data telah disimpan.');
+        });
+        return false;
+    });
+
+    //delete gallery
+    $('.btn-delete-gallery').click(function () {
+        var id = $(this).parent().parent().prev('input[type=hidden]').val();
+        var gal = $('#gallery-thumb-' + id);
+        var url = $(this).attr('href');
+
+        if (confirm('Anda akan menghapus data ini?')) {
+            $.get(url, null, function () {
+                gal.fadeOut(250, function () {
+                    gal.remove();
+                    $('.btn-filter[data-filter="*"]').click();
+                });
+            });
+        }
+        return false;
+    });
+
+
 })(jQuery);
 </script>
 @stop

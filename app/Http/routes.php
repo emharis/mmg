@@ -165,6 +165,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
     Route::post('pages/gallery/new-gallery', ['as' => 'admin.pages.gallery.new-gallery', 'uses' => 'Pages\GalleryController@newGallery']);
     Route::post('pages/gallery/get-youtube', ['as' => 'admin.pages.gallery.get-youtube', 'uses' => 'Pages\GalleryController@getYoutube']);
     Route::post('pages/gallery/update-gallery-title', ['as' => 'admin.pages.gallery.update-gallery-title', 'uses' => 'Pages\GalleryController@updateGalleryTitle']);
+    Route::get('pages/gallery/delete-gallery/{id}', ['as' => 'admin.pages.gallery.delete-gallery', 'uses' => 'Pages\GalleryController@deleteGallery']);
     //Pages >> Gallery >> Kategori
     Route::post('pages/gallery/new-kategori', ['as' => 'admin.pages.new-kategori', 'uses' => 'Pages\GalleryController@newKategori']);
     Route::post('pages/gallery/update-kategori', ['as' => 'admin.pages.update-kategori', 'uses' => 'Pages\GalleryController@updateKategori']);

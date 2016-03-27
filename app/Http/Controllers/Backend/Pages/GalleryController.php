@@ -10,10 +10,6 @@ class GalleryController extends Controller {
 
     function index() {
         $dt_kategori = \DB::table('gallery_kategori')->select(['id', 'nama'])->get();
-//        $kategori = array();
-//        foreach ($dt_kategori as $dt) {
-//            $kategori[$dt->id] = $dt->nama;
-//        }
         return view('backend.pages.gallery.index', [
             'kategori' => $dt_kategori
         ]);
@@ -78,7 +74,7 @@ class GalleryController extends Controller {
         if (!$request->ajax()) {
             return redirect('admin/pages/gallery/gallery');
         } else {
-            $data = \DB::table('VIEW_PRODUK')->find($id);
+            $data = \DB::table('gallery')->find($id);
             echo json_encode($data);
         };
     }
@@ -92,12 +88,40 @@ class GalleryController extends Controller {
     }
 
     //update title of gallery item
-    public function updateGalleryTitle() {
+    public function updateGalleryTitle(Request $request) {
         \DB::table('gallery')
                 ->whereId($request->input('id'))
                 ->update([
-                    'nama' => $request->input('input_edit_nama_gallery')
+                    'title' => $request->input('title')
         ]);
+
+        if (!$request->ajax()) {
+            return redirect('admin/pages/gallery/gallery');
+        } else {
+            $data = \DB::table('gallery')->find($request->input('id'));
+            echo json_encode($data);
+        };
+    }
+
+    //delete gallery
+    public function deleteGallery($id, Request $request) {
+        $data = \DB::table('gallery')
+                ->find($id);
+
+        //cek apakah punya gambar 
+        if ($data->type == 'I') {
+            //delete gambar yang ada
+            \File::delete(\App\Helpers\Helper::appsetting('gallery_img_path') . '/' . $data->img);
+        }
+
+        //delte dari database
+        \DB::table('gallery')
+                ->whereId($id)
+                ->delete();
+
+        if (!$request->ajax()) {
+            return redirect('admin/pages/gallery/gallery');
+        }
     }
 
     /**
