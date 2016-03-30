@@ -171,6 +171,22 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
     Route::post('pages/gallery/update-kategori', ['as' => 'admin.pages.update-kategori', 'uses' => 'Pages\GalleryController@updateKategori']);
     Route::get('pages/gallery/delete-kategori/{id}', ['as' => 'admin.pages.delete-kategori', 'uses' => 'Pages\GalleryController@deleteKategori']);
 
+    //Pages >> Portofolio
+    Route::get('pages/portofolio', ['as' => 'admin.pages.portofolio', 'uses' => 'Pages\PortofolioController@index']);
+    Route::post('pages/portofolio/new-portofolio', ['as' => 'admin.pages.portofolio.new-portofolio', 'uses' => 'Pages\PortofolioController@newPortofolio']);
+    Route::post('pages/portofolio/update-portofolio', ['as' => 'admin.pages.portofolio.update-portofolio', 'uses' => 'Pages\PortofolioController@updatePortofolio']);
+    Route::get('pages/portofolio/delete-portofolio/{id}', ['as' => 'admin.pages.portofolio.delete-portofolio', 'uses' => 'Pages\PortofolioController@deletePortofolio']);
+    
+    //Pages >> Career
+    Route::get('pages/career', ['as' => 'admin.pages.career', 'uses' => 'Pages\CareerController@index']);
+    Route::get('pages/career/delete-career/{id}', ['as' => 'admin.pages.career.delete-career', 'uses' => 'Pages\CareerController@deleteCareer']);
+    Route::get('pages/career/edit-career/{id}', ['as' => 'admin.pages.career.edit-career', 'uses' => 'Pages\CareerController@editCareer']);
+    Route::post('pages/career/new-career', ['as' => 'admin.pages.career.new-career', 'uses' => 'Pages\CareerController@newCareer']);
+    Route::post('pages/career/update-career', ['as' => 'admin.pages.career.update-career', 'uses' => 'Pages\CareerController@updateCareer']);
+    
+    //Pages >> Contact
+    Route::get('pages/contact', ['as' => 'admin.pages.contact', 'uses' => 'Pages\ContactController@index']);
+    
     Route::get('test', function() {
 
         $url = 'https://www.youtube.com/watch?v=YPueCndxb7c&index=11&list=PLD6AE05305CFCF904';

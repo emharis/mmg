@@ -9,5 +9,7 @@ use App\Http\Controllers\Controller;
 
 class ContactController extends Controller
 {
-    //
+    public function index(){
+        echo 'halaman kontak kami';
+    }
 }
