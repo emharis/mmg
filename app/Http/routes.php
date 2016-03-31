@@ -11,9 +11,7 @@
   |
  */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', ['uses'=>'HomeController@index']);
 
 /*
   |--------------------------------------------------------------------------
@@ -29,9 +27,7 @@ Route::get('/', function () {
 Route::group(['middleware' => ['web']], function () {
 
     //
-    Route::get('home', function() {
-        return view('index');
-    });
+    Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
     Route::get('about', function() {
         $data = array('pagetitle' => 'about us');
         return view('about', $data);
@@ -176,17 +172,24 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
     Route::post('pages/portofolio/new-portofolio', ['as' => 'admin.pages.portofolio.new-portofolio', 'uses' => 'Pages\PortofolioController@newPortofolio']);
     Route::post('pages/portofolio/update-portofolio', ['as' => 'admin.pages.portofolio.update-portofolio', 'uses' => 'Pages\PortofolioController@updatePortofolio']);
     Route::get('pages/portofolio/delete-portofolio/{id}', ['as' => 'admin.pages.portofolio.delete-portofolio', 'uses' => 'Pages\PortofolioController@deletePortofolio']);
-    
+
     //Pages >> Career
     Route::get('pages/career', ['as' => 'admin.pages.career', 'uses' => 'Pages\CareerController@index']);
     Route::get('pages/career/delete-career/{id}', ['as' => 'admin.pages.career.delete-career', 'uses' => 'Pages\CareerController@deleteCareer']);
     Route::get('pages/career/edit-career/{id}', ['as' => 'admin.pages.career.edit-career', 'uses' => 'Pages\CareerController@editCareer']);
     Route::post('pages/career/new-career', ['as' => 'admin.pages.career.new-career', 'uses' => 'Pages\CareerController@newCareer']);
     Route::post('pages/career/update-career', ['as' => 'admin.pages.career.update-career', 'uses' => 'Pages\CareerController@updateCareer']);
-    
+
     //Pages >> Contact
     Route::get('pages/contact', ['as' => 'admin.pages.contact', 'uses' => 'Pages\ContactController@index']);
-    
+    Route::get('pages/contact/office', ['as' => 'admin.pages.contact.office', 'uses' => 'Pages\ContactController@office']);
+    Route::post('pages/contact/office/new-office', ['as' => 'admin.pages.contact.office.new-office', 'uses' => 'Pages\ContactController@newOffice']);
+    Route::get('pages/contact/office/edit-office/{id}', ['as' => 'admin.pages.contact.office.edit-office', 'uses' => 'Pages\ContactController@editOffice']);
+    Route::get('pages/contact/office/shift-up-office/{id}', ['as' => 'admin.pages.contact.office.shift-up-office', 'uses' => 'Pages\ContactController@shiftUpOffice']);
+    Route::get('pages/contact/office/shift-down-office/{id}', ['as' => 'admin.pages.contact.office.shift-down-office', 'uses' => 'Pages\ContactController@shiftDownOffice']);
+
+    Route::post('pages/contact/update-email', ['as' => 'admin.pages.contact.update-email', 'uses' => 'Pages\ContactController@updateEmail']);
+
     Route::get('test', function() {
 
         $url = 'https://www.youtube.com/watch?v=YPueCndxb7c&index=11&list=PLD6AE05305CFCF904';
