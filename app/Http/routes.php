@@ -28,10 +28,11 @@ Route::group(['middleware' => ['web']], function () {
 
     //
     Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
-    Route::get('about', function() {
-        $data = array('pagetitle' => 'about us');
-        return view('about', $data);
-    });
+    Route::get('about', ['as' => 'about', 'uses' => 'AboutController@index']);
+//    Route::get('about', function() {
+//        $data = array('pagetitle' => 'about us');
+//        return view('about', $data);
+//    });
     Route::get('services', function() {
         $data = array('pagetitle' => 'Services');
         return view('service', $data);

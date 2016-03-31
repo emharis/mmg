@@ -4,16 +4,25 @@
         <div class="row">
             <div class="social pull-left">
                 <ul>
-                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                    @foreach($sosmed as $dt)
+                        @if(strtolower($dt->name) == 'facebook')
+                        <li><a href="http://www.facebook.com/{{$dt->value}}" target="_blank" ><i class="fa fa-facebook"></i></a></li>
+                        @elseif(strtolower($dt->name) == 'twitter')
+                        <li><a href="http://www.twitter.com/{{$dt->value}}" target="_blank" ><i class="fa fa-twitter"></i></a></li>
+                        @elseif(strtolower($dt->name) == 'google plus')
+                        <li><a href="http://plus.google.com/{{$dt->value}}" target="_blank" ><i class="fa fa-google"></i></a></li>
+                        @elseif(strtolower($dt->name) == 'instagram')
+                        <li><a href="http://www.instagram.com/{{$dt->value}}" target="_blank" ><i class="fa fa-instagram"></i></a></li>
+                        @elseif(strtolower($dt->name) == 'youtube')
+                        <li><a href="http://www.youtube.com/{{$dt->value}}" target="_blank" ><i class="fa fa-youtube"></i></a></li>
+                        @endif                    
+                    @endforeach
                 </ul>
             </div> <!-- /.social -->
             <div class="contact-info pull-right">
                 <ul>
-                    <li><a href="tel:+623547418597" class="hvr-bounce-to-bottom"><i class="fa fa-phone"></i>  (0354) 7418597 </a></li>
-                    <li><a href="mailto:info@merakmudagas.com" class="hvr-bounce-to-bottom"><i class="fa fa-envelope-o"></i> info@merakmudagas.com</a></li>
+                    <li><a href="tel:{{$header_contact['TL']}}" class="hvr-bounce-to-bottom"><i class="fa fa-phone"></i>  {{$header_contact['TL']}} </a></li>
+                    <li><a href="mailto:{{$header_contact['ML']}}" class="hvr-bounce-to-bottom"><i class="fa fa-envelope-o"></i> {{$header_contact['ML']}}</a></li>
                 </ul>
             </div> <!-- /.contact-info -->
         </div>
@@ -54,9 +63,9 @@
                     <i class="fa fa-bars"></i>
                 </button>
                 <ul class="mainmenu pull-right">
-                    <li class="current">
+<!--                    <li class="current">
                         <a href="home" class="hvr-overline-from-left">Home</a>
-                        <!--                                <ul class="submenu">
+                                                        <ul class="submenu">
                                                             <li><a href="index-v2.html">One Page Version</a></li>
                                                             <li class="dropdown">
                                                                 <a href="header-v1.html">Header Variations</a>
@@ -67,19 +76,19 @@
                                                                     <li><a href="header-v4.html">Header V4</a></li>
                                                                 </ul>
                                                             </li>
-                                                        </ul>-->
+                                                        </ul>
                     </li>
                     <li class="">
                         <a href="about" class="hvr-overline-from-left">About Us</a>
                     </li>
-                    <!--                            <li class="dropdown">
+                                                <li class="dropdown">
                                                     <a href="#" class="hvr-overline-from-left">Pages</a>
                                                     <ul class="submenu">
                                                         <li><a href="search-result.html">Search Results</a></li>
                                                         <li><a href="no-search-results.html">No serarch result</a></li>
                                                         <li><a href="404.html">404 Page</a></li>
                                                     </ul>
-                                                </li>-->
+                                                </li>
                     <li class="dropdown">
                         <a href="services" class="hvr-overline-from-left">Services</a>
                         <ul class="submenu">
@@ -90,22 +99,22 @@
                     </li>
                     <li class="">
                         <a href="products" class="hvr-overline-from-left">Products</a>
-                        <!--                                <ul class="submenu">
+                                                        <ul class="submenu">
                                                             <li><a href="pricing.html">Pricing</a></li>
                         
-                                                        </ul>-->
+                                                        </ul>
                     </li>
                     <li class="">
                         <a href="gallery" class="hvr-overline-from-left">Gallery</a>
                     </li>
-                    <!--                    <li class="dropdown">
+                                        <li class="dropdown">
                                             <a href="shop.html" class="hvr-overline-from-left">Shop</a>
                                             <ul class="submenu">
                                                 <li><a href="product-details.html">Product Details</a></li>
                                                 <li><a href="cart-page.html">Cart Page</a></li>
                                                 <li><a href="checkout-page.html">Checkout Page</a></li>
                                             </ul>
-                                        </li>-->
+                                        </li>
                     <li class="dropdown">
                         <a href="blog" class="hvr-overline-from-left">Blog</a>
                         <ul class="submenu">
@@ -116,7 +125,12 @@
                             <li><a href="blog-single.html">Blog Details</a></li>
                         </ul>
                     </li>
-                    <li><a href="contact-us" class="hvr-overline-from-left">Contact Us</a></li>
+                    <li><a href="contact-us" class="hvr-overline-from-left">Contact Us</a></li>-->
+                    @foreach($menu as $dt)
+                    <li class="{{Request::route()->getName() == $dt->url ? 'current':''}}">
+                            <a href="{{$dt->url}}" class="hvr-overline-from-left">{{$dt->nama}}</a>
+                    </li>
+                    @endforeach
                 </ul>
             </nav>
         </div>

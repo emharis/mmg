@@ -113,9 +113,75 @@ INSERT INTO `appsetting` (`name`, `value`) VALUES
 	('homepage_layanan_img_path', 'frontend/img/homepage/layanan'),
 	('homepage_layanan_title', 'LAYANAN KITA'),
 	('homepage_slider_img_path', 'frontend/img/homepage'),
+	('portofolio_img_path', 'frontend/img/portofolio'),
 	('product_img_path', 'frontend/img/product'),
 	('product_price_enable', '0');
 /*!40000 ALTER TABLE `appsetting` ENABLE KEYS */;
+
+
+-- Dumping structure for table merakmuda_db.career
+DROP TABLE IF EXISTS `career`;
+CREATE TABLE IF NOT EXISTS `career` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `title` varchar(100) DEFAULT NULL,
+  `desc` text,
+  `aktif` enum('Y','N') DEFAULT 'Y',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table merakmuda_db.career: ~1 rows (approximately)
+DELETE FROM `career`;
+/*!40000 ALTER TABLE `career` DISABLE KEYS */;
+INSERT INTO `career` (`id`, `created_at`, `updated_at`, `title`, `desc`, `aktif`) VALUES
+	(2, '2016-03-28 22:00:50', '2016-03-28 22:00:50', 'Graphic Design', '<p><b>Job Description</b><br></p><p></p><div><ul><li>Mengolah file mentah dari client menjadi file yang siap di cetak untuk di output di image setter</li><li>Merubah layout/setting/design dan text menjadi hasil dengan standard kualitas tinggi</li><li>Merubah design dan warna menjadi lebih menarik</li><li>Membuat proffprint kepada client untuk di acc sebelum naik cetak</li><li>Memastikan design dan warna yang dicetak sesuai dengan proffprint yang telah di acc client</li></ul><div>&nbsp;</div><div><strong>Requirements:</strong></div><div>&nbsp;</div><ul><li>Pendidikan SMA/SMK</li><li>Usia maksimal 35 tahun</li><li>Pengalaman minimal 5 tahun sebagai Supervisor / Leader</li><li>Menguasai program photoshop, illustrator, freehand, corel, indesign dan sebagainya</li><li>Menguasai dan paham tentang pengolahan warna dan cmyk sebelum dan sesudah cetak</li><li>Menguasai setting dan design</li><li>Mampu bekerja sama dalam tim dan di bawah tekanan</li><li>Mau bekerja shift</li><li>Teliti, rajin dan jujur</li></ul></div><b><br></b><p></p>', 'Y');
+/*!40000 ALTER TABLE `career` ENABLE KEYS */;
+
+
+-- Dumping structure for table merakmuda_db.contact_office
+DROP TABLE IF EXISTS `contact_office`;
+CREATE TABLE IF NOT EXISTS `contact_office` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `nama_cabang` varchar(60) DEFAULT NULL,
+  `alamat` varchar(60) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  `fax` varchar(45) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `order` int(11) DEFAULT NULL,
+  `show_map` enum('Y','N') DEFAULT 'Y',
+  `lat` varchar(50) DEFAULT NULL,
+  `long` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table merakmuda_db.contact_office: ~3 rows (approximately)
+DELETE FROM `contact_office`;
+/*!40000 ALTER TABLE `contact_office` DISABLE KEYS */;
+INSERT INTO `contact_office` (`id`, `created_at`, `updated_at`, `nama_cabang`, `alamat`, `phone`, `fax`, `email`, `order`, `show_map`, `lat`, `long`) VALUES
+	(1, '2016-03-31 08:10:24', '2016-03-31 08:25:36', 'Kediri', 'Jl. Letjen Suprapto 1/24, Kediri, Jawa Timur', '0354-689402 ', '0354-689402', 'ljsuprapto@merakmudagas.com', 1, 'Y', NULL, NULL),
+	(3, '2016-03-31 08:23:09', '2016-03-31 09:46:32', 'Jombang', 'Jl. Raya Perak-Jombang km. 08  Jombang, Jawa Timur ', '0321-874041, 081-259143005', '0321-874041', 'jombang@merakmudagas.com', 2, 'Y', NULL, NULL),
+	(5, '2016-03-31 09:39:46', '2016-03-31 09:46:32', 'Kediri', 'Jl. Banjaran 1 ', '', '', '', 3, 'Y', '-7.820646', '112.023867');
+/*!40000 ALTER TABLE `contact_office` ENABLE KEYS */;
+
+
+-- Dumping structure for table merakmuda_db.contact_setting
+DROP TABLE IF EXISTS `contact_setting`;
+CREATE TABLE IF NOT EXISTS `contact_setting` (
+  `id` tinyint(4) DEFAULT NULL,
+  `main_email` varchar(150) DEFAULT NULL,
+  `cc_email` varchar(150) DEFAULT NULL,
+  `bcc_email` varchar(150) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table merakmuda_db.contact_setting: ~0 rows (approximately)
+DELETE FROM `contact_setting`;
+/*!40000 ALTER TABLE `contact_setting` DISABLE KEYS */;
+INSERT INTO `contact_setting` (`id`, `main_email`, `cc_email`, `bcc_email`) VALUES
+	(1, 'info@merakmudagas.com', 'sonny@merakmudagas.com', '');
+/*!40000 ALTER TABLE `contact_setting` ENABLE KEYS */;
 
 
 -- Dumping structure for table merakmuda_db.footer_emergency
@@ -173,22 +239,14 @@ CREATE TABLE IF NOT EXISTS `gallery` (
   `subtitle` varchar(30) DEFAULT NULL,
   `type` enum('I','V') DEFAULT 'I',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- Dumping data for table merakmuda_db.gallery: ~8 rows (approximately)
+-- Dumping data for table merakmuda_db.gallery: ~2 rows (approximately)
 DELETE FROM `gallery`;
 /*!40000 ALTER TABLE `gallery` DISABLE KEYS */;
 INSERT INTO `gallery` (`id`, `created_at`, `updated_at`, `kategori_id`, `img`, `youtube_url`, `title`, `subtitle`, `type`) VALUES
-	(1, '2016-03-18 10:24:20', '2016-03-18 10:24:20', 7, 'ba822967af84ac4778e2c01146b835c4.jpg', NULL, 'Foto Bersama', 'Foto bareng tim merak muda gas', 'I'),
-	(2, '2016-03-18 10:24:45', '2016-03-18 10:24:45', 7, '5a955017739e196335f59587d2e5e42d.jpg', NULL, 'foto cewek', 'foto cewek asik', 'I'),
-	(3, '2016-03-18 10:48:18', '2016-03-18 10:48:18', 7, '4d4ef2099c6e2fdd4206f123ea7109d8.jpg', NULL, 'Touring Gaja', 'Gajah Touring Bersama Kluarga', 'I'),
-	(6, '2016-03-18 11:27:47', '2016-03-18 11:27:47', 11, '98e8565f0adb74d48eaa646afe0a613e.jpg', NULL, 'Burung Ijo', 'Ijo Burungnya', 'I'),
-	(8, '2016-03-18 11:29:33', '2016-03-18 11:29:33', 11, 'c9bee090bebb87fe2749d653e335ff4c.jpg', NULL, 'Jerapa Afrika', 'di Afrika ada Jerapah', 'I'),
-	(9, '2016-03-18 11:30:47', '2016-03-18 11:30:48', 11, '2c4b0763f1ee4fb391519a4bc5f92cf3.jpg', NULL, 'Kelinci', 'Kelinci sedang berciuman', 'I'),
-	(10, '2016-03-18 12:49:42', '2016-03-18 12:49:42', 9, 'https://i.ytimg.com/vi/A8heeP16TIc/hqdefault.jpg', 'https://www.youtube.com/watch?v=A8heeP16TIc', 'KTM', 'KTM Duke', 'V'),
-	(11, '2016-03-18 14:45:55', '2016-03-18 14:45:55', 11, '413c39732711705e40a380ea0970f842.jpg', NULL, 'beautiful bird', 'beautiful bird love', 'I'),
-	(12, '2016-03-18 14:49:02', '2016-03-18 14:49:02', 11, '564d07a40b03e329f08feee65bcb5cee.jpg', NULL, 'Green Snake', '', 'I'),
-	(13, '2016-03-18 14:49:48', '2016-03-18 14:49:48', 9, 'https://i.ytimg.com/vi/8mIbY13n4uA/hqdefault.jpg', 'https://www.youtube.com/watch?v=8mIbY13n4uA', 'Yamaha WR 125 R', '', 'V');
+	(1, '2016-03-26 07:13:04', '2016-03-26 07:37:58', 7, 'a7d0dfa814f1ad7fc0f700a4679f139b.jpg', NULL, 'Foto Bersama', '', 'I'),
+	(2, '2016-03-26 07:37:46', '2016-03-27 18:44:58', 9, 'https://i.ytimg.com/vi/sVvMR0_uEVo/hqdefault.jpg', 'https://www.youtube.com/watch?v=sVvMR0_uEVo', 'KTM 85 SX', '', 'V');
 /*!40000 ALTER TABLE `gallery` ENABLE KEYS */;
 
 
@@ -209,7 +267,7 @@ INSERT INTO `gallery_kategori` (`id`, `created_at`, `updated_at`, `nama`) VALUES
 	(7, '2016-03-17 11:16:48', '2016-03-17 11:16:48', 'purging'),
 	(8, '2016-03-17 11:16:51', '2016-03-17 11:16:51', 'semproting'),
 	(9, '2016-03-18 10:53:43', '2016-03-18 10:53:43', 'Dirt BIke'),
-	(10, '2016-03-18 10:55:22', '2016-03-18 10:55:22', 'Car'),
+	(10, '2016-03-18 10:55:22', '2016-03-27 16:45:06', 'Cars'),
 	(11, '2016-03-18 11:27:30', '2016-03-18 11:27:30', 'Animals');
 /*!40000 ALTER TABLE `gallery_kategori` ENABLE KEYS */;
 
@@ -320,21 +378,22 @@ CREATE TABLE IF NOT EXISTS `homepage_menu` (
   `position` enum('TP','BT','TB') NOT NULL,
   `order` int(11) NOT NULL,
   `aktif` enum('Y','N') NOT NULL DEFAULT 'Y',
+  `url` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
--- Dumping data for table merakmuda_db.homepage_menu: ~7 rows (approximately)
+-- Dumping data for table merakmuda_db.homepage_menu: ~8 rows (approximately)
 DELETE FROM `homepage_menu`;
 /*!40000 ALTER TABLE `homepage_menu` DISABLE KEYS */;
-INSERT INTO `homepage_menu` (`id`, `created_at`, `updated_at`, `nama`, `position`, `order`, `aktif`) VALUES
-	(1, '2016-03-11 11:23:48', '2016-03-11 21:38:19', 'HOME', 'TP', 1, 'Y'),
-	(2, '2016-03-11 11:23:58', '2016-03-11 21:38:19', 'ABOUT US', 'BT', 2, 'Y'),
-	(3, '2016-03-11 11:24:19', '2016-03-11 14:20:53', 'PRODUCTS', 'BT', 3, 'Y'),
-	(4, '2016-03-11 11:24:31', '2016-03-11 14:06:41', 'GALLERY', 'TP', 4, 'Y'),
-	(5, '2016-03-11 11:24:42', '2016-03-11 14:20:17', 'BLOG', 'BT', 5, 'Y'),
-	(6, '2016-03-11 11:24:54', '2016-03-14 09:59:46', 'PORTOFOLIO', 'TP', 6, 'Y'),
-	(7, '2016-03-11 11:25:04', '2016-03-14 09:59:46', 'CAREER', 'TB', 7, 'Y'),
-	(8, '2016-03-14 10:00:02', '2016-03-14 10:00:03', 'CONTACT US', 'TB', 8, 'Y');
+INSERT INTO `homepage_menu` (`id`, `created_at`, `updated_at`, `nama`, `position`, `order`, `aktif`, `url`) VALUES
+	(1, '2016-03-11 11:23:48', '2016-03-31 13:27:47', 'HOME', 'TP', 1, 'Y', 'home'),
+	(2, '2016-03-11 11:23:58', '2016-03-31 13:27:48', 'ABOUT US', 'BT', 2, 'Y', 'about'),
+	(3, '2016-03-11 11:24:19', '2016-03-31 13:27:48', 'PRODUCTS', 'BT', 3, 'Y', 'products'),
+	(4, '2016-03-11 11:24:31', '2016-03-31 11:33:02', 'GALLERY', 'TP', 4, 'Y', 'gallery'),
+	(5, '2016-03-11 11:24:42', '2016-03-31 11:33:09', 'BLOG', 'BT', 5, 'Y', 'blog'),
+	(6, '2016-03-11 11:24:54', '2016-03-31 11:33:15', 'PORTOFOLIO', 'TP', 6, 'Y', 'portfolio'),
+	(7, '2016-03-11 11:25:04', '2016-03-31 11:33:18', 'CAREER', 'TB', 7, 'Y', 'career'),
+	(8, '2016-03-14 10:00:02', '2016-03-31 11:33:21', 'CONTACT US', 'TB', 8, 'Y', 'contact');
 /*!40000 ALTER TABLE `homepage_menu` ENABLE KEYS */;
 
 
@@ -415,8 +474,8 @@ INSERT INTO `kategori` (`id`, `created_at`, `updated_at`, `nama`, `aktif`, `orde
 	(1, '2016-03-14 07:36:59', '2016-03-14 10:04:00', 'Gas & Cairan Cryogenic', 'Y', 1),
 	(2, '2016-03-14 07:37:52', '2016-03-14 10:04:15', 'Alat Kesehatan non Elektro Medik non Steril', 'Y', 2),
 	(3, '2016-03-14 07:38:00', '2016-03-14 10:04:53', 'Alat Industri', 'Y', 3),
-	(4, '2016-03-14 07:38:17', '2016-03-15 08:05:20', 'Jasa & Penjualan', 'Y', 4),
-	(10, '2016-03-14 09:57:48', '2016-03-15 08:05:20', 'Perdaganan Lain', 'Y', 5);
+	(4, '2016-03-14 07:38:17', '2016-03-31 08:20:30', 'Jasa & Penjualan', 'Y', 4),
+	(10, '2016-03-14 09:57:48', '2016-03-31 08:20:31', 'Perdaganan Lain', 'Y', 5);
 /*!40000 ALTER TABLE `kategori` ENABLE KEYS */;
 
 
@@ -434,6 +493,24 @@ CREATE TABLE IF NOT EXISTS `permissions` (
 DELETE FROM `permissions`;
 /*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
+
+
+-- Dumping structure for table merakmuda_db.portofolio
+DROP TABLE IF EXISTS `portofolio`;
+CREATE TABLE IF NOT EXISTS `portofolio` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `title` varchar(100) DEFAULT NULL,
+  `subtitle` varchar(100) DEFAULT NULL,
+  `img` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table merakmuda_db.portofolio: ~1 rows (approximately)
+DELETE FROM `portofolio`;
+/*!40000 ALTER TABLE `portofolio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `portofolio` ENABLE KEYS */;
 
 
 -- Dumping structure for table merakmuda_db.produk
