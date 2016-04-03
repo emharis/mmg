@@ -15,10 +15,26 @@ class HeadfootController extends Controller {
 
         //FOOTER
         $footer_emergency = \DB::table('footer_emergency')->first();
+        $footer_emergency->img = \App\Helpers\Helper::appsetting('footer_emergency_img_path') . "/" . $footer_emergency->img;
 
         //partners
         $partners = \DB::table('footer_partner')->orderBy('order', 'asc')->get();
         $partner_img_path = \App\Helpers\Helper::appsetting('footer_partner_img_path');
+
+
+        //bottom footer
+        $bottom_footer = \DB::table('footer_bottom')->first();
+        if ($bottom_footer->img != "") {
+            $bottom_footer->img = \App\Helpers\Helper::appsetting('footer_img_path') . "/" . $bottom_footer->img;
+        }
+        $offices = \DB::table('contact_office')->get();
+        $slc_office = array();
+        foreach ($offices as $dt) {
+            $slc_office[$dt->id] = $dt->nama_cabang . ' [' . $dt->alamat . ']';
+        }
+
+        //company logo
+        $complogo = \App\Helpers\Helper::appsetting('web_company_logo_img_path') . "/" . \App\Helpers\Helper::appsetting('web_company_logo');
 
         return view('backend.pages.headfoot.index', [
             'sosmed' => $sosmed,
@@ -27,6 +43,9 @@ class HeadfootController extends Controller {
             'emergency' => $footer_emergency,
             'partners' => $partners,
             'partner_img_path' => $partner_img_path,
+            'complogo' => $complogo,
+            'bottom_footer' => $bottom_footer,
+            'select_office' => $slc_office,
         ]);
     }
 
@@ -236,6 +255,29 @@ class HeadfootController extends Controller {
                     'telp' => $request->telp
         ]);
 
+        //cek apoakah ada gambar
+        if ($request->hasFile('emergency_image')) {
+            //delete gambar lama
+            $emergency = \DB::table('footer_emergency')->first();
+            if ($emergency->img != "") {
+                //delete file yang lama
+                \File::delete(\App\Helpers\Helper::appsetting('footer_emergency_img_path') . '/' . $emergency->img);
+            }
+
+            //upload image yang baru
+            $file = $request->file('emergency_image');
+            $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
+            if ($file->isValid()) {
+                $file->move(\App\Helpers\Helper::appsetting('footer_emergency_img_path'), $filename);
+            }
+
+            //update nama file di database
+            \DB::table('footer_emergency')
+                    ->update([
+                        'img' => $filename
+            ]);
+        }
+
         if (!$request->ajax()) {
             return redirect('admin/pages/headfoot');
         };
@@ -432,8 +474,72 @@ class HeadfootController extends Controller {
     }
 
     //end of partners
+    //Bottom Footer
+    public function updateBottomFooter(Request $request) {
+        $footer = \DB::table('footer_bottom')->first();
+
+        \DB::table('footer_bottom')->update([
+            'message_info_text' => $request->input('message_info_text'),
+            'office_1' => $request->input('office_1'),
+            'office_2' => $request->input('office_2'),
+            'office_3' => $request->input('office_3'),
+        ]);
+
+        //cek apakah ada gambarnya
+        if ($request->hasFile('bottomfooter_img')) {
+            //delete file yang sudah ada
+            \File::delete(\App\Helpers\Helper::appsetting('footer_img_path') . '/' . $footer->img);
+
+            //input file yang baru
+            $file = $request->file('bottomfooter_img');
+            $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
+            if ($file->isValid()) {
+                $file->move(\App\Helpers\Helper::appsetting('footer_img_path'), $filename);
+            }
+
+            //update nama file di database
+            \DB::table('footer_bottom')
+                    ->update([
+                        'img' => $filename
+            ]);
+        }
+
+        if (!$request->ajax()) {
+            return redirect('admin/pages/headfoot');
+        }
+    }
+
+    //End Of Bottom Footer
 
     /**
      * END OF FOOTER SECTION
      */
+    public function updateCompanyLogo(Request $request) {
+        if ($request->hasFile('company_img')) {
+            //cek gambar yang lama
+            if (\App\Helpers\Helper::appsetting('web_company_logo') != "") {
+                //delete file yang lama
+                \File::delete(\App\Helpers\Helper::appsetting('web_company_logo_img_path') . '/' . \App\Helpers\Helper::appsetting('web_company_logo'));
+            }
+
+
+            $file = $request->file('company_img');
+            $filename = md5(rand(111, 999999) . substr($file->getClientOriginalName(), 0, 15)) . '.' . $file->getClientOriginalExtension();
+            if ($file->isValid()) {
+                $file->move(\App\Helpers\Helper::appsetting('web_company_logo_img_path'), $filename);
+            }
+
+            //update nama file di database
+            \DB::table('appsetting')
+                    ->whereName('web_company_logo')
+                    ->update([
+                        'value' => $filename
+            ]);
+        }
+
+        if (!$request->ajax()) {
+            return redirect('admin/pages/headfoot');
+        }
+    }
+
 }

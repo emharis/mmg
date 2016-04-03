@@ -16,14 +16,14 @@
                 <td>
                     <input type="text" name="partner_nama" class="form-control" autocomplete="off" required />
                 </td>
-                <td rowspan="3" class="col-md-4 col-sm-4 col-lg-4" >
-                    <img id="partner_img_prev" class="col-sm-12 col-md-12 col-lg-12" />
+                <td rowspan="3" class="col-md-2 col-sm-2 col-lg-2" >
+                    <img id="partner_img_prev" class="img-responsive"  />
                 </td>
             </tr>
             <tr>
                 <td>Logo *maxwidth = 195px; maxheight:75px</td>
                 <td>
-                    <input type="file" name="partner_img" required />
+                    <input type="file" name="partner_img" required accept=".gif,.jpg,.jpeg,.png" />
                 </td>
             </tr>
             <tr>
@@ -180,7 +180,7 @@
                 <a target="_blank" href="http://' + data.link + '" >' + data.link + '</a>\n\
             </td>\n\
             <td>\n\
-                <input type="checkbox" class="flat-red ck-partner" name="ck-partner-aktif-' + data.id + '" value="' + data.id + '" checked>\n\
+                Aktif\n\
             </td>\n\
             <td>\n\
                 <a class="btn btn-success btn-xs btn-shift-up-partner" data-id="' + data.id + '" href="admin/pages/headfoot/shift-up-partner/' + data.id + '" ><i class="fa fa-angle-double-up" ></i></a>\n\
@@ -212,6 +212,7 @@
         //clear input
         $('#form-footer-new-partner input[type=text]').val('');
         $('#form-footer-new-partner input[type=file]').val(null);
+        $('#partner_img_prev').attr('src',null);
     }
 
     //shift up order

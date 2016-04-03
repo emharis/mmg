@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class AboutController extends Controller {
+class AboutController extends FrontController {
 
     public function index() {
         $data = array('pagetitle' => 'about us');

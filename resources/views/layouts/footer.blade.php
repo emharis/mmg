@@ -3,12 +3,12 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-3">
-                <img class="wow bounceInLeft" src="img/emergency/man.png" alt="">
+                <img class="wow bounceInLeft" src="{{$footer_emergency->img}}" alt="">
             </div>
             <div class="col-lg-offset-3 col-md-offset-3 col-lg-9 col-md-9">
-                <h2>Keperluan <span>Darurat</span></h2>
-                <p>Jika anda membutuhkan penanganan darurat, hubungi kami siap 24 jam</p>
-                <p class="phone-contact"><b>0355-335571</b> OR <a href="contact.html" class="hvr-bounce-to-right">Contact Us</a></p>
+                <h2>{{$footer_emergency->title}}</h2>
+                <p>{{$footer_emergency->subtitle}}</p>
+                <p class="phone-contact"><b>{{$footer_emergency->telp}}</b> OR <a href="contact" class="hvr-bounce-to-right">Kirim Pesan</a></p>
             </div>
         </div>
     </div>
@@ -21,27 +21,13 @@
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="owl-carousel owl-theme">
+                    @foreach($footer_partner as $dt)
                     <div class="item">
-                        <img src="img/clients/C&U.png" alt="">
+                        <a href="http://{{$dt->link}}" target="_blank  " >
+                            <img src="{{$footer_partner_img_path . "/" . $dt->img}}" alt="{{$dt->nama}}">
+                        </a>
                     </div>
-                    <div class="item">
-                        <img src="img/clients/HARRIS.png" alt="">
-                    </div>
-                    <div class="item">
-                        <img src="img/clients/Elpiji.png" alt="">
-                    </div>
-                    <div class="item">
-                        <img src="img/clients/cigweld.png" alt="">
-                    </div>
-                    <div class="item">
-                        <img src="img/clients/danfoss.jpg" alt="">
-                    </div>
-                    <div class="item">
-                        <img src="img/clients/SHARP.png" alt="">
-                    </div>
-                    <div class="item">
-                        <img src="img/clients/gea.png" alt="">
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -55,7 +41,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12">
-                <div class="request-for-qoute-wrap"><a href="contact-us" class="request-for-qoute wow slideInDown hvr-bounce-to-right">kirim pertanyaan dan konsultasi gratis</a></div>
+                <div class="request-for-qoute-wrap"><a href="contact" class="request-for-qoute wow slideInDown hvr-bounce-to-right">{{$footer_bottom->message_info_text}}</a></div>
                 <nav class="footer-menu">
                     <button class="footer-nav-toggler hvr-bounce-to-right">Footer Menu <i class="fa fa-bars"></i></button>
                     <ul>
@@ -72,36 +58,37 @@
         <div class="row">
             <!-- .widget -->
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 widget">
-                <h3>Office Tulungagung</h3>
+                <h3>{{$office_1->nama_cabang}}</h3>
                 <ul class="contact-info">
-                    <li><i class="fa fa-map-marker"></i> Jl. Raya Pojok Ngantru km. 10 <br>Tulungagung, Jawa Timur</li>
-                    <li><i class="fa fa-phone"></i> 0355-7708848, 081-335682682</li>
-                    <li><i class="fa fa-fax"></i> 0355-335571</li>
-                    <li><i class="fa fa-envelope-o"></i> tulungagung@merakmudagas.com</li>
+                    <li><i class="fa fa-map-marker"></i> {{$office_1->alamat}}</li>
+                    <li><i class="fa fa-phone"></i> {{$office_1->phone}}</li>
+                    <li><i class="fa fa-fax"></i> {{$office_1->fax}}</li>
+                    <li><i class="fa fa-envelope-o"></i> {{$office_1->email}}</li>
                 </ul>
             </div> <!-- /.widget -->
             <!-- .widget -->
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 widget">
-                <h3>Jombang</h3>
+                <h3>{{$office_2->nama_cabang}}</h3>
                 <ul class="contact-info">
-                    <li><i class="fa fa-map-marker"></i> Jl. Perak-Jombang km. 10 <br>Jombang, Jawa Timur</li>
-                    <li><i class="fa fa-phone"></i> 0321-874041, 081-259143005</li>
-                    <li><i class="fa fa-fax"></i> 0321-874041</li>
-                    <li><i class="fa fa-envelope-o"></i> jombang@merakmudagas.com</li>
+                    <li><i class="fa fa-map-marker"></i> {{$office_2->alamat}}</li>
+                    <li><i class="fa fa-phone"></i> {{$office_2->phone}}</li>
+                    <li><i class="fa fa-fax"></i> {{$office_2->fax}}</li>
+                    <li><i class="fa fa-envelope-o"></i> {{$office_2->email}}</li>
                 </ul>
             </div> <!-- /.widget -->
             <!-- .widget -->
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 widget">
-                <h3>Kediri</h3>
+                <h3>{{$office_3->nama_cabang}}</h3>
                 <ul class="contact-info">
-                    <li><i class="fa fa-map-marker"></i> Jl. Letjen Suprapto 1/24 <br>Kediri, Jawa Timur</li>
-                    <li><i class="fa fa-phone"></i> 0354-689402</li>
-                    <li><i class="fa fa-envelope-o"></i> kediri@merakmudagas.com</li>
+                    <li><i class="fa fa-map-marker"></i> {{$office_3->alamat}}</li>
+                    <li><i class="fa fa-phone"></i> {{$office_3->phone}}</li>
+                    <li><i class="fa fa-fax"></i> {{$office_3->fax}}</li>
+                    <li><i class="fa fa-envelope-o"></i> {{$office_3->email}}</li>
                 </ul>
             </div> <!-- /.widget -->
             <!-- .widget -->
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 widget">
-                <img class="positioned wow slideInUp " src="img/resources/footer-man.png" alt="">
+                <img class="positioned wow slideInUp " src="{{$footer_bottom->img}}" alt="">
             </div> <!-- /.widget -->
         </div>
     </div>

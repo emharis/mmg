@@ -33,6 +33,7 @@ class HomepageController extends Controller {
         $gallery_title = \App\Helpers\Helper::appsetting('homepage_gallery_section_title');
         $gallery_img_path = \App\Helpers\Helper::appsetting('homepage_gallery_img_path');
         $galleryimg = \DB::table('homepage_gallery')->lists('img', 'img_no');
+        $gallerytitle = \DB::table('homepage_gallery')->lists('title', 'img_no');
 
         //BLOG
         $homepage_blog_section_title = \App\Helpers\Helper::appsetting('homepage_blog_section_title');
@@ -47,6 +48,7 @@ class HomepageController extends Controller {
             'layanan_section_title' => $layanan_section_title,
             'gallery_section_title' => $gallery_title,
             'gallery' => $galleryimg,
+            'gallery_title' => $gallerytitle,
             'gallery_img_path' => $gallery_img_path,
             'blog_section_title' => $homepage_blog_section_title,
             'displayed_blog_item_number' => $displayed_blog_item_number,
@@ -152,7 +154,7 @@ class HomepageController extends Controller {
 
         if ($type == 3) {
             \DB::table('homepage_slider')
-                    ->where('id', '=', $id)
+                    ->where('id', '=', $slider->id)
                     ->update([
                         'list_item_1' => $request->input('list-item-1-type-3'),
                         'list_item_1_color' => $request->input('color-list-item-1-type-3'),
@@ -535,9 +537,9 @@ class HomepageController extends Controller {
 
         if (!$request->ajax()) {
             return redirect('admin/pages/homepage');
-        }else{
+        } else {
             $layanan = \DB::table('homepage_layanan')
-                ->find($request->input('layanan_id'));
+                    ->find($request->input('layanan_id'));
             echo json_encode($layanan);
         };
     }
@@ -589,6 +591,37 @@ class HomepageController extends Controller {
                         'img' => $filename
             ]);
         }
+    }
+
+    //delete iamge galllery
+    function deleteImageGallery($imgnum, Request $request) {
+        $img = \DB::table('homepage_gallery')->whereImgNo($imgnum)->first();
+        //delete file
+        \File::delete(\App\Helpers\Helper::appsetting('homepage_gallery_img_path') . '/' . $img->img);
+        //delete isi database
+        \DB::table('homepage_gallery')
+                ->whereImgNo($imgnum)
+                ->update([
+                    'title' => '',
+                    'img' => ''
+        ]);
+
+        if (!$request->ajax()) {
+            return redirect('admin/pages/homepage');
+        };
+    }
+
+    //update title image gallery
+    function updateImageGalleryTitle($imgnum, $title, Request $request) {
+        \DB::table('homepage_gallery')
+                ->whereImgNo($imgnum)
+                ->update([
+                    'title' => $request->title
+        ]);
+
+//        if (!$request->ajax()) {
+//            return redirect('admin/pages/homepage');
+//        };
     }
 
     /**

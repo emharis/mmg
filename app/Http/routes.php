@@ -104,6 +104,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
     //pages >> Homepage >> Gallery
     Route::post('pages/homepage/update-section-gallery', ['as' => 'admin.pages.homepage.update-section-gallery', 'uses' => 'Pages\HomepageController@updateSectionGallery']);
     Route::post('pages/homepage/set-image-gallery', ['as' => 'admin.pages.homepage.set-image-gallery', 'uses' => 'Pages\HomepageController@setImageGallery']);
+    Route::get('pages/homepage/delete-image-gallery/{id}', ['as' => 'admin.pages.homepage.delete-image-gallery', 'uses' => 'Pages\HomepageController@deleteImageGallery']);
+    Route::get('pages/homepage/update-image-gallery-title/{imgnum}/{title}', ['as' => 'admin.pages.homepage.update-image-gallery-title', 'uses' => 'Pages\HomepageController@updateImageGalleryTitle']);
+                                                                                                                                                                              
     //pages >> Homepage >> Blog
     Route::post('pages/homepage/update-section-title-blog', ['as' => 'admin.pages.homepage.update-section-title-blog', 'uses' => 'Pages\HomepageController@updateSectionTitleBlog']);
 
@@ -123,6 +126,10 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
     Route::get('pages/headfoot/update-aktif-menu/{id}/{aktif}', ['as' => 'admin.pages.headfoot.update-aktif-menu', 'uses' => 'Pages\HeadfootController@updateAktifMenu']);
     //Pages >> Header & Footer >> Emergency
     Route::post('pages/headfoot/update-emergency', ['as' => 'admin.pages.headfoot.update-emergency', 'uses' => 'Pages\HeadfootController@updateEmergency']);
+    //Pages >> Header & Footer >> COmpany Logo
+    Route::post('pages/headfoot/update-company-logo', ['as' => 'admin.pages.headfoot.update-company-logo', 'uses' => 'Pages\HeadfootController@updateCompanyLogo']);
+    //Pages >> Header & Footer >> Bottom Footer
+    Route::post('pages/headfoot/update-bottom-footer', ['as' => 'admin.pages.headfoot.update-bottom-footer', 'uses' => 'Pages\HeadfootController@updateBottomFooter']);
     //Pages >> Header & Footer >> partner
     Route::post('pages/headfoot/new-partner', ['as' => 'admin.pages.headfoot.new-partner', 'uses' => 'Pages\HeadfootController@newPartner']);
     Route::get('pages/headfoot/shift-up-partner/{id}', ['as' => 'admin.pages.headfoot.shift-up-partner', 'uses' => 'Pages\HeadfootController@shiftUpPartner']);

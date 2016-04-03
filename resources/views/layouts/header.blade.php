@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-4 col-lg-offset-0 col-md-offset-4 logo">
                 <a href="home">
-                    <img src="img/resources/logo.png" alt="Plumberx">
+                    <img src="{{$company_logo}}" alt="PT. Merak Muda Gas">
                 </a>
             </div>
             <nav class="col-lg-9 col-md-12 col-lg-pull-0 col-md-pull-1 mainmenu-container">
