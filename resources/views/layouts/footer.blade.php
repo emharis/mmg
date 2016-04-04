@@ -45,12 +45,9 @@
                 <nav class="footer-menu">
                     <button class="footer-nav-toggler hvr-bounce-to-right">Footer Menu <i class="fa fa-bars"></i></button>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="project-v1.html">Projects</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
+                        @foreach($menu as $dt)
+                        <li><a href="{{$dt->url}}">{{$dt->nama}}</a></li>
+                        @endforeach
                     </ul>
                 </nav>
             </div>
