@@ -12,9 +12,12 @@ class ProductController extends Controller {
         $kategori = \DB::table('kategori')->orderBy('order', 'asc')->get();
 
         $produk = \DB::table('VIEW_PRODUK')->orderBy('kategori_id')->get();
+        $setting_harga = \App\Helpers\Helper::appsetting('product_price_enable');
+        
         return view('backend.pages.product.index', [
             'kategori' => $kategori,
             'produk' => $produk,
+            'setting_harga' => $setting_harga,
         ]);
     }
 
@@ -62,28 +65,31 @@ class ProductController extends Controller {
     public function deleteKategori($id, Request $request) {
 
         $data = \DB::table('kategori')->find($id);
+        $order_data = $data->order;
+        
 
-        //reorder dulu nomor ordernya
-        $datas = \DB::table('kategori')->where('order', '>', $data->order)->get();
-        foreach ($datas as $dt) {
+        \DB::transaction(function()use($id,$order_data){
+            //delete data dari database
             \DB::table('kategori')
-                    ->whereId($dt->id)
-                    ->update([
-                        'order' => $dt->order - 1
-            ]);
-        }
-
-        //delete data dari database
-        \DB::table('kategori')
-                ->whereId($id)
-                ->delete();
+                    ->whereId($id)
+                    ->delete();
+                    
+            //reorder dulu nomor ordernya
+            $datas = \DB::table('kategori')->where('order', '>', $order_data)->get();
+            foreach ($datas as $dt) {
+                \DB::table('kategori')
+                        ->whereId($dt->id)
+                        ->update([
+                            'order' => $dt->order - 1
+                ]);
+            }        
+                    
+        });
+        
 
         if (!$request->ajax()) {
             return redirect('admin/pages/product');
-        } else {
-//            $data = \DB::table('kategori')->find($request->input('kategori_id'));
-//            echo json_encode($data);
-        };
+        } 
     }
 
     public function shiftUpKategori($id, Request $request) {
@@ -138,7 +144,7 @@ class ProductController extends Controller {
     }
 
     public function kategori() {
-        $kategori = \DB::table('kategori')->select(['id', 'nama'])->get();
+        $kategori = \DB::table('kategori')->orderBy('order','asc')->select(['id', 'nama'])->get();
 //        return json_encode($kategori);
         echo json_encode($kategori);
     }
@@ -186,7 +192,7 @@ class ProductController extends Controller {
         //tambahkan img path
         $data->imgpath = \App\Helpers\Helper::appsetting('product_img_path');
 
-        $kategori = \DB::table('kategori')->select(['id', 'nama'])->get();
+        $kategori = \DB::table('kategori')->orderBy('order','asc')->select(['id', 'nama'])->get();
         $slc_kategori = array();
         foreach ($kategori as $kat) {
             $slc_kategori[$kat->id] = $kat->nama;
@@ -225,7 +231,7 @@ class ProductController extends Controller {
 
             //update nama file di database
             \DB::table('produk')
-                    ->whereId($id)
+                    ->whereId($data->id)
                     ->update([
                         'img' => $filename
             ]);
@@ -252,6 +258,14 @@ class ProductController extends Controller {
         \DB::table('produk')
                 ->delete($id);
 
+        if (!$request->ajax()) {
+            return redirect('admin/pages/product');
+        }
+    }
+    
+    public function updateSettingHarga(Request $request){
+        \App\Helpers\Helper::updateappsetting('product_price_enable',$request->input('tampilkan_harga'));
+        
         if (!$request->ajax()) {
             return redirect('admin/pages/product');
         }

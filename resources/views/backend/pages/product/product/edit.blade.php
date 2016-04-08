@@ -75,6 +75,44 @@
                 rowdata.children('td:first').next().next().html(aktif);
             }
         });
+        
+        //cek ukuran gambar
+        //tampilkan image
+    $('input[name=produk_edit_img]').change(function () {
+        var width = 370;
+        var height = 426;
+        var inputfile = $(this);
+        var imgprev = $('#produk-edit-img-prev');
+        //cek ukuran gambar
+        var fr = new FileReader;
+        var fileUpload = this;
+        fr.onload = function () {
+            var img = new Image;
+            var ukuransesuai = false;
+            img.onload = function () {
+                if (img.width == width && img.height == height) {
+                    ukuransesuai = true;
+                }
+                if (ukuransesuai) {
+                    //tampilkan gambar
+                    if (fileUpload.files && fileUpload.files[0]) {
+                        fr.onload = function (e) {
+                            imgprev.attr('src', e.target.result);
+                        }
+                        fr.readAsDataURL(fileUpload.files[0]);
+                    }
+                } else {
+                    alert('Ukuran gambar tidak sesuai');
+                    //bersihkan input file
+                    inputfile.val(null);
+                    //clear image preview
+                    imgprev.attr('src', 'backend/img/product_page/main-item.jpg');
+                }
+            };
+            img.src = fr.result;
+        };
+        fr.readAsDataURL(this.files[0]);
+    });
 
     })(jQuery);
 </script>

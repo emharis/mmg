@@ -70,7 +70,7 @@
                         <tr class="row-desc-no-image" >
                             <td>Desc</td>
                             <td colspan="2">
-                                <textarea name="desc_no_image" id="desc_no_image" class="textarea" placeholder="Place some text here" ></textarea>
+                                <textarea name="desc_no_image" rows="8" id="desc_no_image" class="form-control" placeholder="Place some text here" ></textarea>
                             </td>
                         </tr>
                         <tr>
@@ -137,7 +137,7 @@
                             No Image
                             @endif
                         </td>
-                        <td>
+                        <td class="text-center" >
                             @if($dt->aktif == 'Y')
                             <i class="fa fa-check" ></i>
                             @else

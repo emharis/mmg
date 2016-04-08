@@ -62,7 +62,7 @@
                         <tr class="row-desc-no-image" >
                             <td>Desc</td>
                             <td colspan="2">
-                                <textarea name="desc_no_image" id="desc_no_image" class="textarea" placeholder="Place some text here" >{{$desc->type}}</textarea>
+                                <textarea name="desc_no_image" id="desc_no_image" rows="8" class="form-control" placeholder="Place some text here" >{{$desc->desc}}</textarea>
                             </td>
                         </tr>
                         @endif
@@ -101,7 +101,7 @@
                             <td></td>
                             <td colspan="2">
                                 <button type="submit" class="btn btn-sm btn-primary" >Save</button>
-                                <a class="btn btn-sm btn-danger" id="btn-cancel-add-new-about-desc" >Cancel</a>
+                                <a class="btn btn-sm btn-danger" id="btn-cancel-add-new-about-desc" data-dismiss="modal" >Cancel</a>
                             </td>
                         </tr>
                     </tbody>

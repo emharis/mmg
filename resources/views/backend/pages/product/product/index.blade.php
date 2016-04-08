@@ -3,97 +3,126 @@
 @parent
 <link href="backend/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
 @append
-<a class="btn btn-primary btn-sm" id="btn-add-produk" ><i class="fa fa-plus" ></i> Add Product</a>
-<div class="clearfix" ></div>
-<br/>
 
-<form style="background-color: #ECF0F5;padding: 10px;" name="form-new-produk" id="form-new-produk" action="admin/pages/product/new-produk" method="POST" class="hide" enctype="multipart/form-data" >
-    <table class="table table-bordered table-condensed " id="table-new-produk" >
+<section id="layout">
+    <h2 class="page-header"><a href="admin/pages/product#setting">Product Setting</a></h2>
+    <form name="form-update-setting-harga" method="POST" action="admin/pages/product/update-setting-harga" >
+        <table class="table table-bordered table-condensed" >
+            <tbody>
+                <tr>
+                    <td class="col-sm-2 col-md-2 col-lg-2" >Tampilkan Harga</td>
+                    <td>
+                        <select name="tampilkan_harga" class="form-control" >
+                            <option value="Y" {{$setting_harga == 'Y' ? 'selected':''}} >Tampilkan</option>
+                            <option value="N" {{$setting_harga == 'N' ? 'selected':''}} >Sembunyikan</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td  ></td>
+                    <td>
+                        <button type="submit" class="btn btn-primary btn-sm"  >Save</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</section>
+
+<section id="layout">
+    <h2 class="page-header"><a href="admin/pages/product#product">Data Products</a></h2>
+    <a class="btn btn-primary btn-sm" id="btn-add-produk" ><i class="fa fa-plus" ></i> Add Product</a>
+    <div class="clearfix" ></div>
+    <br/>
+
+    <form style="background-color: #ECF0F5;padding: 10px;" name="form-new-produk" id="form-new-produk" action="admin/pages/product/new-produk" method="POST" class="hide" enctype="multipart/form-data" >
+        <table class="table table-bordered table-condensed " id="table-new-produk" >
+            <tbody>
+                <tr>
+                    <td>Nama</td>
+                    <td>
+                        <input required type="text" name="produk_nama" class="form-control" autocomplete="off" />    
+                    </td>
+                    <td class="col-sm-3 col-md-3 col-lg-3" rowspan="5" >
+                        <img id="produk-img-prev" class="col-sm-12 col-md-12 col-lg-12" src="backend/img/product_page/main-item.jpg"  />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Kategori</td>
+                    <td>
+                        {!! Form::select('kategori',[],null,['class'=>'form-control','required']) !!}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Price</td>
+                    <td>
+                        <input type="text" name="produk_price" class="form-control text-right" autocomplete="off" />    
+                    </td>
+                </tr>
+                <tr>
+                    <td>Image</td>
+                    <td>
+                        <input type="file" name="produk_img"  />    
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sub Description</td>
+                    <td>
+                        <input autocomplete="off" type="text" name="produk_subdesc" maxlength="100" class="form-control"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td colspan="2">
+                        <textarea name="produk_desc" class="form-control" rows="5" ></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="submit" class="btn btn-sm btn-primary" >Save</button>
+                        <a class="btn btn-danger btn-sm" id="btn-cancel-new-produk" >Cancel</a>
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>    
+    </form>
+
+    <table id="table-produk" class="table table-bordered table-condensed table-hover" >
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Kategori</th>
+                <th class="col-sm-1 col-md-1 col-lg-1 text-center">Aktif</th>
+                <th class="col-sm-1 col-md-1 col-lg-1 text-center" ></th>
+            </tr>
+        </thead>
         <tbody>
-            <tr>
-                <td>Nama</td>
+            @foreach($produk as $dt)
+            <tr data-id="{{$dt->id}}" >
                 <td>
-                    <input required type="text" name="produk_nama" class="form-control" autocomplete="off" />    
+                    {{$dt->nama}}
                 </td>
-                <td class="col-sm-3 col-md-3 col-lg-3" rowspan="5" >
-                    <img id="produk-img-prev" class="col-sm-12 col-md-12 col-lg-12" src="backend/img/product_page/main-item.jpg"  />
-                </td>
-            </tr>
-            <tr>
-                <td>Kategori</td>
                 <td>
-                    {!! Form::select('kategori',[],null,['class'=>'form-control','required']) !!}
+                    {{$dt->kategori}}
+                </td>
+                <td class="col-sm-1 col-md-1 col-lg-1 text-center" >
+                    @if($dt->aktif == 'Y')
+                    <i class="fa fa-check" ></i>
+                    @else
+                    <i class="fa fa-close" ></i>
+                    @endif
+                </td>
+                <td class="col-sm-1 col-md-1 col-lg-1 text-center" >
+                    <a class="btn btn-xs btn-primary btn-edit-produk" href="admin/pages/product/edit-product/{{$dt->id}}" >&nbsp;<i class="fa fa-edit" ></i>&nbsp;</a>
+                    <a class="btn btn-xs btn-danger btn-delete-produk" href="admin/pages/product/delete-product/{{$dt->id}}" >&nbsp;<i class="fa fa-trash" ></i>&nbsp;</a>
                 </td>
             </tr>
-            <tr>
-                <td>Price</td>
-                <td>
-                    <input type="text" name="produk_price" class="form-control text-right" autocomplete="off" />    
-                </td>
-            </tr>
-            <tr>
-                <td>Image</td>
-                <td>
-                    <input type="file" name="produk_img"  />    
-                </td>
-            </tr>
-            <tr>
-                <td>Sub Description</td>
-                <td>
-                    <input type="text" name="produk_subdesc" maxlength="100" class="form-control"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Description</td>
-                <td colspan="2">
-                    <textarea name="produk_desc" class="form-control" rows="5" ></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <button type="submit" class="btn btn-sm btn-primary" >Save</button>
-                    <a class="btn btn-danger btn-sm" id="btn-cancel-new-produk" >Cancel</a>
-                </td>
-                <td></td>
-            </tr>
+            @endforeach
         </tbody>
-    </table>    
-</form>
-
-<table id="table-produk" class="table table-bordered table-condensed table-hover" >
-    <thead>
-        <tr>
-            <th>Nama</th>
-            <th>Kategori</th>
-            <th class="col-sm-1 col-md-1 col-lg-1 text-center">Aktif</th>
-            <th class="col-sm-1 col-md-1 col-lg-1 text-center" ></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($produk as $dt)
-        <tr data-id="{{$dt->id}}" >
-            <td>
-                {{$dt->nama}}
-            </td>
-            <td>
-                {{$dt->kategori}}
-            </td>
-            <td class="col-sm-1 col-md-1 col-lg-1 text-center" >
-                @if($dt->aktif == 'Y')
-                <i class="fa fa-check" ></i>
-                @else
-                <i class="fa fa-close" ></i>
-                @endif
-            </td>
-            <td class="col-sm-1 col-md-1 col-lg-1 text-center" >
-                <a class="btn btn-xs btn-primary btn-edit-produk" href="admin/pages/product/edit-product/{{$dt->id}}" >&nbsp;<i class="fa fa-edit" ></i>&nbsp;</a>
-                <a class="btn btn-xs btn-danger btn-delete-produk" href="admin/pages/product/delete-product/{{$dt->id}}" >&nbsp;<i class="fa fa-trash" ></i>&nbsp;</a>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
+    </table>
+</section>
 
 <div class="modal" id="modal-produk" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
@@ -114,6 +143,13 @@
 <script src="backend/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 <script>
 (function ($) {
+    
+    //submit form form-update-setting-harga
+    $('form[name=form-update-setting-harga]').ajaxForm({
+        success:function(){
+            alert('Data telah disimpan');
+        }
+    });
 
     $('#btn-add-produk').click(function () {
 //set select kategori
@@ -153,13 +189,13 @@
 
     }
 
-//tampilkan image
+    //tampilkan image
     $('input[name=produk_img]').change(function () {
         var width = 370;
         var height = 426;
         var inputfile = $(this);
         var imgprev = $('#produk-img-prev');
-//cek ukuran gambar
+        //cek ukuran gambar
         var fr = new FileReader;
         var fileUpload = this;
         fr.onload = function () {
@@ -170,7 +206,7 @@
                     ukuransesuai = true;
                 }
                 if (ukuransesuai) {
-//tampilkan gambar
+                    //tampilkan gambar
                     if (fileUpload.files && fileUpload.files[0]) {
                         fr.onload = function (e) {
                             imgprev.attr('src', e.target.result);
@@ -191,6 +227,7 @@
         };
         fr.readAsDataURL(this.files[0]);
     });
+    
 //format number 
     $('input[name=produk_price]').change();
     $('input[name=produk_price]').keyup(function () {

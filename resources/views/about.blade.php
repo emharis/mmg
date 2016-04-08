@@ -2,10 +2,10 @@
 
 @section('styles')
 <style>
-/*    #featured .col-lg-8{
-        padding: 20px 0 10px;
-
-    }*/
+    /*    #featured .col-lg-8{
+            padding: 20px 0 10px;
+    
+        }*/
 </style>
 @stop
 
@@ -13,8 +13,102 @@
 
 @include('layouts.pagetitle')
 
-<!-- #our-mission -->
+@foreach($about as $dt)
+@if($dt->type == "IR")
 <section id="our-mission">
+    <div class="container">
+        @if($dt->title !="")
+        <div class="section-title">
+            <h1>{{$dt->title}}</h1>
+        </div>
+        @endif
+        <div class="row">
+            <div class="col-lg-7 col-md-7 col-sm-12">
+                {!! $dt->desc !!}
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-12">
+                <div class="img-holder">
+                    <img src="{{$about_img_path . '/' . $dt->img}}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@elseif($dt->type == "IL")
+<section id="featured">
+    <div class="container">
+        @if($dt->title !="")
+        <div class="section-title">
+            <h1>{{$dt->title}}</h1>
+        </div>
+        @endif
+        <div class="row">
+            <div class="col-lg-8 col-md-8 pull-right">
+                <div class="col-lg-12 col-md-12" >
+                    {!! $dt->desc !!}
+                </div>
+                <div class="col-lg-6 col-md-6">
+                </div>
+                <div class="col-lg-6 col-md-6 ">
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 about-image pull-left wow slideInLeft" data-wow-offset="10">
+                <img src="img/about/2.jpg" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+@elseif($dt->type == "NI")
+<section id="our-mission">
+    <div class="container">
+        @if($dt->title !="")
+        <div class="section-title">
+            <h1>{{$dt->title}}</h1>
+        </div>
+        @endif
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                {!! $dt->desc !!}
+            </div>
+        </div>
+    </div>
+</section>
+@elseif($dt->type == "LS")
+<section id="featured">
+    <div class="container">
+        @if($dt->title !="")
+        <div class="section-title">
+            <h1>{{$dt->title}}</h1>
+        </div>
+        @endif
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <?php $lsnum = 1; ?>
+                @foreach($dt->list as $ls)
+                <div class="col-lg-6 col-md-6">
+                    <div class="content clearfix">
+                        <div class="img-wrap pull-left wow fadeIn" data-wow-offset="3">
+                            <img src="img/about/icon/{{$lsnum++}}.png" alt="">
+                        </div>
+                        <div class="content-wrap pull-right">
+                            <h2>{{$ls->title}}</h2>
+                            <p>{!! $ls->content !!}</p>
+                        </div>
+                    </div>                    
+                </div>
+                @if($lsnum>4)
+                <?php $lsnum = 1; ?>
+                @endif
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+@endforeach
+
+<!-- #our-mission -->
+<!--<section id="our-mission">
     <div class="container">
         <div class="section-title">
             <h1>Sejarah</h1>
@@ -36,9 +130,10 @@
             </div>
         </div>
     </div>
-</section> <!-- /#our-mission -->
+</section>-->
+<!-- /#our-mission -->
 
-<section id="featured">
+<!--<section id="featured">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-8 pull-right">
@@ -59,10 +154,10 @@
             </div>
         </div>
     </div>
-</section>
+</section>-->
 
 <!-- #our-motto -->
-<section id="our-mission">
+<!--<section id="our-mission">
     <div class="container">
         <div class="section-title">
             <h1>Motto</h1>
@@ -76,10 +171,11 @@
             </div>
         </div>
     </div>
-</section> <!-- /#our-motto -->
+</section> -->
+<!-- /#our-motto -->
 
 <!-- #our-vison -->
-<section id="our-mission">
+<!--<section id="our-mission">
     <div class="container">
         <div class="section-title">
             <h1>Visi</h1>
@@ -91,13 +187,14 @@
                     Menjadi perusahaan penyedia gas dan alat-alat penunjang medis dan industri yang paling terpercaya, berkualitas unggul dan mampu bersain di pasar global.
                 </p>
             </div>
-            
+
         </div>
     </div>
-</section> <!-- /#our-vision -->
+</section> -->
+<!-- /#our-vision -->
 
 <!-- #our-vision -->
-<section id="featured">
+<!--<section id="featured">
     <div class="container">
         <div class="section-title">
             <h1>Misi</h1>
@@ -147,7 +244,7 @@
             </div>
         </div>
     </div>
-</section> 
+</section> -->
 <!-- /#our-vison -->
 
 <section id="featured">

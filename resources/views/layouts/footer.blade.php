@@ -60,7 +60,7 @@
                     <li><i class="fa fa-map-marker"></i> {{$office_1->alamat}}</li>
                     <li><i class="fa fa-phone"></i> {{$office_1->phone}}</li>
                     <li><i class="fa fa-fax"></i> {{$office_1->fax}}</li>
-                    <li><i class="fa fa-envelope-o"></i> {{$office_1->email}}</li>
+                    <li><a href="mailto:{{$office_1->email}}" ><i class="fa fa-envelope-o"></i> {{$office_1->email}}</a></li>
                 </ul>
             </div> <!-- /.widget -->
             <!-- .widget -->
@@ -70,7 +70,7 @@
                     <li><i class="fa fa-map-marker"></i> {{$office_2->alamat}}</li>
                     <li><i class="fa fa-phone"></i> {{$office_2->phone}}</li>
                     <li><i class="fa fa-fax"></i> {{$office_2->fax}}</li>
-                    <li><i class="fa fa-envelope-o"></i> {{$office_2->email}}</li>
+                    <li><a href="mailto:{{$office_2->email}}" ><i class="fa fa-envelope-o"></i> {{$office_2->email}}</a></li>
                 </ul>
             </div> <!-- /.widget -->
             <!-- .widget -->
@@ -80,7 +80,7 @@
                     <li><i class="fa fa-map-marker"></i> {{$office_3->alamat}}</li>
                     <li><i class="fa fa-phone"></i> {{$office_3->phone}}</li>
                     <li><i class="fa fa-fax"></i> {{$office_3->fax}}</li>
-                    <li><i class="fa fa-envelope-o"></i> {{$office_3->email}}</li>
+                    <li><a href="mailto:{{$office_3->email}}" ><i class="fa fa-envelope-o"></i> {{$office_3->email}}</a></li>
                 </ul>
             </div> <!-- /.widget -->
             <!-- .widget -->

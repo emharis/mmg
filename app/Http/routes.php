@@ -49,10 +49,12 @@ Route::group(['middleware' => ['web']], function () {
         $data = array('pagetitle' => 'Suku Cadang');
         return view('sukucadang', $data);
     });
-    Route::get('products', function() {
-        $data = array('pagetitle' => 'Products');
-        return view('product', $data);
-    });
+    Route::get('products', ['as' => 'products', 'uses' => 'ProductController@index']);
+    Route::get('products/category/{id}', ['as' => 'products.category', 'uses' => 'ProductController@byCategory']);
+//    Route::get('products', function() {
+//        $data = array('pagetitle' => 'Products');
+//        return view('product', $data);
+//    });
     Route::get('gallery', function() {
         $data = array('pagetitle' => 'Gallery');
         return view('gallery', $data);
@@ -162,6 +164,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin'], function () {
     Route::get('pages/product/edit-product/{id}', ['as' => 'admin.pages.product.edit-product', 'uses' => 'Pages\ProductController@editProduct']);
     Route::get('pages/product/delete-product/{id}', ['as' => 'admin.pages.product.delete-product', 'uses' => 'Pages\ProductController@deleteProduct']);
     Route::post('pages/product/update-product', ['as' => 'admin.pages.product.update-product', 'uses' => 'Pages\ProductController@updateProduct']);
+    Route::post('pages/product/update-setting-harga', ['as' => 'admin.pages.product.update-setting-harga', 'uses' => 'Pages\ProductController@updateSettingHarga']);
 
     //Pages >> Gallery
     Route::get('pages/gallery', ['as' => 'admin.pages.gallery', 'uses' => 'Pages\GalleryController@index']);

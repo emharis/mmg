@@ -8,7 +8,8 @@
                         <img class="img-bordered-sm" src="{{$complogo}}" >
                     </td >
                     <td>
-                        <input type="file" name="company_img" required />
+                        <input type="file" name="company_img" required accept="image/*" />
+                        <i>* 287x64px</i>
                     </td>
                     <td rowspan="2" class="col-sm-2 col-md-2 col-lg-2">
                         <img class="img-bordered-sm" src="" id="company-logo-prev">
