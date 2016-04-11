@@ -16,7 +16,8 @@
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#tab_1" data-toggle="tab">Category</a></li>
-            <li><a href="#tab_2" data-toggle="tab">Product</a></li>
+            <li><a href="#tab_2" data-toggle="tab">Product Setting</a></li>
+            <li><a href="#tab_3" data-toggle="tab">Data Product</a></li>
 
         </ul>
         <div class="tab-content">
@@ -24,6 +25,9 @@
                 @include('backend.pages.product.kategori.index')
             </div>
             <div class="tab-pane" id="tab_2">
+                @include('backend.pages.product.product.setting')
+            </div>
+            <div class="tab-pane" id="tab_3">
                 @include('backend.pages.product.product.index')
             </div><!-- /.tab-pane -->
         </div><!-- /.tab-content -->

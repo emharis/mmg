@@ -19,68 +19,40 @@
                 <div class="sidebar-widget">
                     <h4>Kategori</h4>
                     <ul class="category-list">
-                        <?php $katnum = 1; ?>
                         @foreach($kategori as $dt)
                         <li><a class="{{$dt->id == $current_kategori->id ?'active':''}}"  href="products/category/{{$dt->id}}"><i class="fa fa-angle-right"></i> {{$dt->nama}}</a></li>
                         @endforeach
                     </ul>
                 </div> <!-- /.sidebar-widget -->
-
-                <!--                 .sidebar-widget 
-                                <div class="sidebar-widget">
-                                    <h4>Popular Posts</h4>
-                                    <ul class="popular-post">
-                                        <li class="clearfix">
-                                            <img src="img/product-details/1.jpg" alt="">
-                                            <div class="content-wrap">
-                                                <h5>Neque porro quisqua mest qui dolorem.</h5>
-                                                <span>20 June</span>
-                                            </div>
-                                        </li>
-                                        <li class="clearfix">
-                                            <img src="img/product-details/2.jpg" alt="">
-                                            <div class="content-wrap">
-                                                <h5>Neque porro quisqua mest qui dolorem.</h5>
-                                                <span>20 June</span>
-                                            </div>
-                                        </li>
-                                        <li class="clearfix">
-                                            <img src="img/product-details/3.jpg" alt="">
-                                            <div class="content-wrap">
-                                                <h5>Neque porro quisqua mest qui dolorem.</h5>
-                                                <span>20 June</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>  /.sidebar-widget 
                 
-                                 .sidebar-widget 
-                                <div class="sidebar-widget text-widget">
-                                    <h4>Text Widget</h4>
-                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolore que laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi arch itecto beatae vitae dict eaque ipsa quae.</p>
-                                </div>  /.sidebar-widget 
+                <!-- .sidebar-widget -->
+                <div class="sidebar-widget">
+				    <h4>Search</h4>
+				    <form action="#" class="search-form">
+					    <input type="text" placeholder="Enter Search Keywords">
+					    <button type="submit"><i class="fa fa-search"></i></button>
+					</form>
+				</div> <!-- /.sidebar-widget -->
                 
-                                 .sidebar-widget 
-                                <div class="sidebar-widget">
-                                    <h4>Tags Clouds</h4>
-                                    <div class="tag-cloud">
-                                        <a href="#">Kitchen Plumbing </a>
-                                        <a href="#">Pipe fixes</a>
-                                        <a href="#">Drain Cleaning</a>
-                                        <a href="#">tips</a>
-                                        <a href="#">Pipe leakages</a>
-                                        <a href="#">outside Plumbing </a>
-                                    </div>
-                                </div>  /.sidebar-widget 
-                
-                                 .sidebar-widget 
-                                <div class="sidebar-widget text-widget">
-                                    <img src="img/product-details/add_1.jpg" alt="">
-                                </div>  /.sidebar-widget 
-                                 .sidebar-widget 
-                                <div class="sidebar-widget text-widget">
-                                    <img src="img/product-details/add_2.jpg" alt="">
-                                </div>  /.sidebar-widget -->
+                <!-- .sidebar-widget -->
+                @if($is_show_new_product == 'Y')
+					<div class="sidebar-widget">
+						<h4>{{$new_product_text}}</h4>
+						<ul class="popular-post">
+                            @foreach($new_product as $dt)
+							<li class="clearfix \">
+                                <?php $img_src = ($dt->img != "" ? $product_img_path . '/' . $dt->img : 'img/product-details/1.jpg'); ?>
+								<div class="new-product-nailthumb" >
+                                    <a href="products/detail/{{$dt->id}}" ><img src="{{$img_src}}" alt=""></a>
+                                </div>
+								<div class="content-wrap">
+                                    <a href="products/detail/{{$dt->id}}"><h5>{{$dt->nama}}</h5></a>
+								</div>
+							</li>
+                            @endforeach
+						</ul>
+					</div> <!-- /.sidebar-widget -->
+                @endif
 
             </div> <!-- /.sidebar -->
 
@@ -102,7 +74,7 @@
                             @if($show_price == 'Y')
                             <span>Price: <b>Rp.{{number_format($dt->price,0,',','.')}}</b></span>
                             @endif
-                            <a href="#" class="add-to-cart hvr-bounce-to-right">Detail</a>
+                            <a href="products/detail/{{$dt->id}}" class="add-to-cart hvr-bounce-to-right">Detail</a>
                         </div>
                     </div>
                     @endforeach
@@ -180,6 +152,8 @@
 <script>
     (function ($) {
          jQuery('.img-nailthumb').nailthumb({width:244,height:180});
+         jQuery('.new-product-nailthumb').nailthumb({width:120,height:82});
+         $('.new-product-nailthumb').css("float",'left');
     })(jQuery);
 </script>
 @append

@@ -13,11 +13,23 @@ class ProductController extends Controller {
 
         $produk = \DB::table('VIEW_PRODUK')->orderBy('kategori_id')->get();
         $setting_harga = \App\Helpers\Helper::appsetting('product_price_enable');
+        $setting_new_produk = \App\Helpers\Helper::appsetting('product_show_latest');
+        $setting_new_produk_num = \App\Helpers\Helper::appsetting('product_show_latest_num');
+        $setting_produk_sejenis = \App\Helpers\Helper::appsetting('product_show_related');
+        $setting_produk_sejenis_num = \App\Helpers\Helper::appsetting('product_show_related_num');
+        $product_new_text = \App\Helpers\Helper::appsetting('product_new_text');
+        $product_related_text = \App\Helpers\Helper::appsetting('product_related_text');
         
         return view('backend.pages.product.index', [
             'kategori' => $kategori,
             'produk' => $produk,
             'setting_harga' => $setting_harga,
+            'setting_new_produk' => $setting_new_produk,
+            'setting_new_produk_num' => $setting_new_produk_num,
+            'setting_produk_sejenis' => $setting_produk_sejenis,
+            'setting_produk_sejenis_num' => $setting_produk_sejenis_num,
+            'product_related_text' =>$product_related_text,
+            'product_new_text' =>$product_new_text,
         ]);
     }
 
@@ -265,6 +277,14 @@ class ProductController extends Controller {
     
     public function updateSettingHarga(Request $request){
         \App\Helpers\Helper::updateappsetting('product_price_enable',$request->input('tampilkan_harga'));
+        \App\Helpers\Helper::updateappsetting('product_show_latest',$request->input('show_new_product'));
+        \App\Helpers\Helper::updateappsetting('product_show_latest_num',$request->input('new_product_num'));
+        \App\Helpers\Helper::updateappsetting('product_show_related',$request->input('show_product_sejenis'));
+        \App\Helpers\Helper::updateappsetting('product_show_related_num',$request->input('related_product_num'));
+        \App\Helpers\Helper::updateappsetting('product_new_text',$request->input('product_new_text'));
+        \App\Helpers\Helper::updateappsetting('product_related_text',$request->input('product_related_text'));
+        \App\Helpers\Helper::updateappsetting('product_new_text',$request->input('product_new_text'));
+        \App\Helpers\Helper::updateappsetting('product_related_text',$request->input('product_related_text'));
         
         if (!$request->ajax()) {
             return redirect('admin/pages/product');

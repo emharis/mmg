@@ -51,9 +51,11 @@ Route::group(['middleware' => ['web']], function () {
     });
     Route::get('products', ['as' => 'products', 'uses' => 'ProductController@index']);
     Route::get('products/category/{id}', ['as' => 'products.category', 'uses' => 'ProductController@byCategory']);
+    Route::get('products/detail/{id}', ['as' => 'products.detail', 'uses' => 'ProductController@detail']);
 //    Route::get('products', function() {
-//        $data = array('pagetitle' => 'Products');
-//        return view('product', $data);
+//    Route::get('products',detail() {
+//        $data = array('pagetitle'detail 'Products');
+//        return view('productdetail $data);
 //    });
     Route::get('gallery', function() {
         $data = array('pagetitle' => 'Gallery');

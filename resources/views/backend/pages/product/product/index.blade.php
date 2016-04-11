@@ -5,31 +5,6 @@
 @append
 
 <section id="layout">
-    <h2 class="page-header"><a href="admin/pages/product#setting">Product Setting</a></h2>
-    <form name="form-update-setting-harga" method="POST" action="admin/pages/product/update-setting-harga" >
-        <table class="table table-bordered table-condensed" >
-            <tbody>
-                <tr>
-                    <td class="col-sm-2 col-md-2 col-lg-2" >Tampilkan Harga</td>
-                    <td>
-                        <select name="tampilkan_harga" class="form-control" >
-                            <option value="Y" {{$setting_harga == 'Y' ? 'selected':''}} >Tampilkan</option>
-                            <option value="N" {{$setting_harga == 'N' ? 'selected':''}} >Sembunyikan</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td  ></td>
-                    <td>
-                        <button type="submit" class="btn btn-primary btn-sm"  >Save</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </form>
-</section>
-
-<section id="layout">
     <h2 class="page-header"><a href="admin/pages/product#product">Data Products</a></h2>
     <a class="btn btn-primary btn-sm" id="btn-add-produk" ><i class="fa fa-plus" ></i> Add Product</a>
     <div class="clearfix" ></div>
@@ -143,13 +118,6 @@
 <script src="backend/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 <script>
 (function ($) {
-    
-    //submit form form-update-setting-harga
-    $('form[name=form-update-setting-harga]').ajaxForm({
-        success:function(){
-            alert('Data telah disimpan');
-        }
-    });
 
     $('#btn-add-produk').click(function () {
 //set select kategori
