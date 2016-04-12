@@ -49,6 +49,7 @@ Route::group(['middleware' => ['web']], function () {
         $data = array('pagetitle' => 'Suku Cadang');
         return view('sukucadang', $data);
     });
+    //Product Controller
     Route::get('products', ['as' => 'products', 'uses' => 'ProductController@index']);
     Route::get('products/category/{id}', ['as' => 'products.category', 'uses' => 'ProductController@byCategory']);
     Route::get('products/detail/{id}', ['as' => 'products.detail', 'uses' => 'ProductController@detail']);
@@ -57,10 +58,12 @@ Route::group(['middleware' => ['web']], function () {
 //        $data = array('pagetitle'detail 'Products');
 //        return view('productdetail $data);
 //    });
-    Route::get('gallery', function() {
-        $data = array('pagetitle' => 'Gallery');
-        return view('gallery', $data);
-    });
+    // Route::get('gallery', function() {
+    //     $data = array('pagetitle' => 'Gallery');
+    //     return view('gallery', $data);
+    // });
+    Route::get('gallery', ['as' => 'gallery', 'uses' => 'GalleryController@index']);
+    
     Route::get('blog', function() {
         $data = array('pagetitle' => 'Blogs');
         return view('blog', $data);

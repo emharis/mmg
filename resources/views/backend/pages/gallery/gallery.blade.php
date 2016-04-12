@@ -112,7 +112,9 @@
                     @if($dt->type == 'I')
                     <img  src="{{$href}}" class="img-responsive gal-img" />
                     @else
-                    <img src="{{ $dt->img}}" class="img-responsive gal-ytb" />
+                    <div class="gallery-youtube" >
+                    <img src="backend/img/gallery/1.jpg" data-src="{{ $dt->img}}" class="img-responsive gal-ytb" />
+                    </div>
                     @endif
                 </a>
                 <br/>
@@ -141,6 +143,8 @@
 
 </section><!-- /.content -->
 
+<!--<a class="btn btn-primary " id="btn-test" >TEST</a>-->
+
 
 @stop
 
@@ -150,9 +154,28 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js" ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-media.js" ></script>
+<script src="https://cdn.jsdelivr.net/jquery.nailthumb/1.1/jquery.nailthumb.min.js"></script>
 
 <script>
 (function ($) {
+    // thumbnail
+    function normalizeImage(){       
+        //ganti image dengan image youtube
+        $('img.gal-ytb').each(function(i,data){
+            var img_src = $(this).data('src');
+            $(this).attr('src',img_src);
+        });                
+        //set image size to thumbnail
+        var _width = $('img.gal-img:first').width();
+        var _height = $('img.gal-img:first').height();
+       jQuery('.gallery-youtube').nailthumb({width:_width,height:_height});
+    //    jQuery('.gallery-youtube').css("float",'left');
+    
+        
+    }
+    
+    
+    
     //set to null select element
     $('select[name=kategori],select[name=tipe]').val([]);
     var youtube_valid = false;
@@ -366,6 +389,11 @@
         }
         return false;
     });
+    
+    // $('#btn-test').click(function(){
+    //     normalizeImage();
+    // });
+    normalizeImage();
 
 
 })(jQuery);
