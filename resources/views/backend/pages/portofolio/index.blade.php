@@ -107,10 +107,7 @@
 
 @section('scripts')
 <script src="backend/plugins/jqueryform/jquery.form.js" type="text/javascript"></script>
-<script src="https://npmcdn.com/masonry-layout@4.0/dist/masonry.pkgd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js" ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-media.js" ></script>
 
 <script>
 (function ($) {
@@ -138,7 +135,7 @@
     //update form handle dengan jqueryr form
     $('.form-update-portfolio').ajaxForm({
         success: function () {
-            alert('success');
+            alert('Data telah disimpan.');
         }
     });
 
@@ -157,25 +154,6 @@
         }
     });
 
-    //cek ukuran
-
-//    //set to null select element
-//    $('select[name=portofolio],select[name=tipe]').val([]);
-//    var youtube_valid = false;
-//    //tanpilkan input image atau video
-//    $('select[name=tipe]').change(function () {
-//        $('#tr-image, #tr-video').hide();
-//        var tipe = $(this).val();
-//        var elm = "";
-//        if (tipe == 'I') {
-//            elm = '#tr-image';
-//        } else {
-//            elm = '#tr-video';
-//        }
-//        $(elm).removeClass('hide');
-//        $(elm).hide();
-//        $(elm).slideDown(250);
-//    });
     //image cek ukuran
     $('input[name=portofolio_img]').change(function () {
         var fr = new FileReader;
@@ -220,154 +198,18 @@
         };
         fr.readAsDataURL(this.files[0]);
     });
-//    //vide url change
-//    $('input[name=gallery_youtube]').change(function () {
-//        var url = $(this).val();
-//        if ($('select[name=tipe]').val() == 'V' && url != '') {
-////            alert('generate youtube json');
-//            //clear preview
-//            //youtube url etc: https://www.youtube.com/watch?v=249QZwob-Ow
-//            //imgprev.attr('src', 'http://img.youtube.com/vi/<insert-youtube-video-id-here>/hqdefault.jpg');
-//
-//            //generate youtube data from url
-//            $.post('admin/pages/gallery/get-youtube', {
-//                'url': url
-//            }, function (data) {
-////                alert(data);
-//                data = JSON.parse(data);
-//                $('#new-img-prev').attr('src', data.thumbnail_url);
-//            }).fail(function () {
-//                alert('Video not found, url not valid');
-//                $('#new-img-prev').attr('src', 'backend/img/portofolio/1.jpg');
-//                //fokuskan ke url
-//                $('input[name=gallery_youtube]').focus();
-//            });
-//        }
-//    });
-//    //clear input
-//    function clearInput() {
-//        $('#form-new-gallery input[type=text]').val('');
-//        $('#form-new-gallery input[type=file]').val(null);
-//        $('#form-new-gallery select').val([]);
-//        $('#new-img-prev').attr('src', 'backend/img/portofolio/1.jpg');
-//    }
-//    clearInput();
-//    //add gallery
-//    $('#btn-add-gallery').click(function () {
-//        $('#form-new-gallery').removeClass('hide');
-//        $('#form-new-gallery').hide();
-//        $('#form-new-gallery').slideDown(250, null, function () {
-//            clearInput();
-//        });
-//    });
-//    //cancel add new gallery
-//    $('#btn-cancel-add-gallery').click(function () {
-//        $('#form-new-gallery').slideUp(250, null, function () {
-//            clearInput();
-//        });
-//    });
-//
-//    //fancybox
-//    $(".fancybox-img").fancybox({
-//        openEffect: 'elastic',
-//        closeEffect: 'elastic',
-//        arrows: false,
-//        helpers: {
-//            title: {
-//                type: 'inside'
-//            }
-//        }
-//    });
-////    $(".fancybox-ytb").fancybox({
-////        openEffect: 'none',
-////        closeEffect: 'none',
-////        helpers: {
-////            media: {}
-////        }
-////    });
-//    $(".fancybox-ytb").fancybox({
-//        openEffect: 'elastic',
-//        closeEffect: 'elastic',
-//        fitToView: false,
-//        width: '70%',
-//        height: '70%',
-//        arrows: false,
-//        helpers: {
-//            title: {
-//                type: 'inside'
-//            },
-//            media: {}
-//        }
-//    });
-//
-//    //filter
-//    $('.mmg-gallery').isotope();
-//    $('.btn-filter').click(function () {
-//        var _filter = $(this).data('filter');
-////            alert(filter);
-//        $('.mmg-gallery').isotope({filter: _filter});
-//    });
-//
-//    //edit gallery
-//    $('.btn-edit-gallery').click(function () {
-//        var id = $(this).data('id');
-//        var span = $(this).prev();
-//        var formedit = '<form name="form-update-portfolio"  method="POST" action="admin/pages/gallery/update-portfolio-title" >\n\
-//                        <input type="hidden" name="id" value="' + id + '" />\n\
-//                        <table class="table table-bordered table-condensed" >\n\
-//                            <tbody>\n\
-//                                <tr>\n\
-//                                    <td>\n\
-//                                        <div class="input-group">\n\
-//                                            <input autocomplete="off" value="' + span.text() + '" type="text" class="form-control input-sm" name="title" />\n\
-//                                            <div class="input-group-btn">\n\
-//                                                <button type="submit" class="btn btn-primary btn-sm" ><i class="fa fa-save" ></i></button>\n\
-//                                            </div>\n\
-//                                        </div>\n\
-//                                    </td>\n\
-//                                </tr>\n\
-//                            </tbody>\n\
-//                        </table>\n\
-//                    </form>';
-//
-//        span.html(formedit)
-//        return false;
-//    });
-//
-//    //update gallery title
-////    $('form[name=form-update-portfolio]').ajaxForm({
-////        success:function(){
-////            alert('sukses');
-////        }
-////    });
-//
-//    $(document).on('submit', 'form.form-update-portfolio', function () {
-////        alert('submitting');
-//        var form = $(this);
-//        form.ajaxSubmit(function () {
-////            $('form[name=form-update-portfolio]').hide();
-//            alert('Data telah disimpan.');
-//        });
-//        return false;
-//    });
-//
-//    //delete gallery
-//    $('.btn-delete-gallery').click(function () {
-//        var id = $(this).parent().parent().prev('input[type=hidden]').val();
-//        var gal = $('#gallery-thumb-' + id);
-//        var url = $(this).attr('href');
-//
-//        if (confirm('Anda akan menghapus data ini?')) {
-//            $.get(url, null, function () {
-//                gal.fadeOut(250, function () {
-//                    gal.remove();
-//                    $('.btn-filter[data-filter="*"]').click();
-//                });
-//            });
-//        }
-//        return false;
-//    });
 
+    //fancybox
+    $(".fancybox-img").fancybox({
+        openEffect: 'elastic',
+        closeEffect: 'elastic',
+        arrows: false,
+        helpers: {
+            title: {
+                type: 'inside'
+            }
+        }
+    });
 
 })(jQuery);
 </script>

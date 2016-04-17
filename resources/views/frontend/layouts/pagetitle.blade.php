@@ -8,9 +8,10 @@
                     <h1>{{$pagetitle}}</h1>
                 </div> <!-- /.title -->
                 <!-- .page-breadcumb -->
-                <div class="page-breadcumb pull-right">
+                <!--<div class="page-breadcumb pull-right">
                     <i class="fa fa-home"></i> <a href="index.html">Home</a> <i class="fa fa-angle-right"></i> <span>About Us</span>
-                </div> <!-- /.page-breadcumb -->
+                </div> -->
+                <!-- /.page-breadcumb -->
             </div>
         </div>
     </div>

@@ -44,12 +44,16 @@
                     <li><a href="admin/pages/contact"><i class="fa fa-circle-o"></i> Contact Us</a></li>
                 </ul>
             </li>
-            <li class="">
+            <li class="treeview">
                 <a href="#">
                     <i class="fa fa-laptop"></i>
                     <span>Blogs</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
+                <ul class="treeview-menu">
+                    <li><a href="admin/blogs/kategori"><i class="fa fa-circle-o"></i> Kategori</a></li>
+                    <li><a href="admin/blogs/blog"><i class="fa fa-circle-o"></i> Blog</a></li>
+                </ul>
             </li>
             
         </ul>
